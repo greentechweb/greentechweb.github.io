@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>	
+	<!--meta-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!--bootstrap-->
+	<link rel="stylesheet" href="assets/framework/bootstrap-4.3.1-dist/css/bootstrap.min.css">
+	<!--fontawsome-->
+	<link href="assets/framework/fontawesome-free-5.15.1-web/css/all.min.css" rel="stylesheet">
+	<!--Style-->
+	<link rel="stylesheet" href="assets/css/style.css">
+	<link rel="stylesheet" href="assets/css/checkmark.css">
+	<!--Font-->
+	<link rel="stylesheet" href="assets/font/css/style.css">
+	
+</head>
+
+<body>
+	<div class="container">
+		
+			<div class="login row bg-dark rounded mt-sm-5">
+				<div class="col-6 d-flex justify-content-center align-items-center cover">
+					<i class="fa fa-10x fa-sign-in-alt" aria-hidden="true" style="opacity:0.7;"></i>
+				</div>
+				<div class="col-6 d-flex justify-content-center text-center" style="direction:rtl;">
+					<form action="/afra/" method="POST">
+						<img class="logo m-3" src="assets/img/logo-sm.png">
+						<h1 class="h3 mb-3 text-bold text-white">لطفاً وارد شوید</h1>
+						<input type="text" name="username" id="username" class="form-control btn-n bg-white mb-4 text-center" placeholder="نام کاربری" required="" autofocus="" style="direction:rtl; ">
+						<input type="password" name="password" id="password" class="form-control btn-n bg-white mb-4 text-center" placeholder="رمز عبور" required="" style="direction: rtl;">
+						
+						<label class="contain">مرا به خاطر داشته باش
+							<input type="checkbox" checked="checked">
+							<span class="checkmark"></span>
+						</label>
+						<br/>
+						<button class="btn-n py-2 px-4" type="submit"><a href="dashboard.html" class="text-white">ورود</a></button>
+						<a href="http://afra-watergy.com/" class="btn-n text-white mx-4 px-3 py-2">
+						<i class="fa fa-home"></i>
+						</a>
+						<h6 class="mt-6 mt-sm-5 mb-3 text-white">سبز پایش افرا ©
+						
+						</h6>
+						
+					</form>
+				</div>
+				
+			</div>
+		
+		
+		<!--Waves Container-->
+		<div class="fixed-bottom">
+			<svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+				<defs>
+					<path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+				</defs>
+				<g class="parallax">
+					<use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
+					<use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+					<use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+					<use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+				</g>
+			</svg>
+		</div>
+		<!--Waves end-->
+
+	</div>
+	
+</body>
+</html>

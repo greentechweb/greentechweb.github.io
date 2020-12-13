@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=UTF-8 />
+    <link rel="stylesheet" href="assets/font/css/style.css">
+    <style>
+        body{
+            display: block;
+            overflow: hidden;
+            margin:0;
+        }
+        html {
+  width: 100%;
+  height: 100%;
+ 
+  background: linear-gradient(90deg, #00d2ff 0%, #3a47d5 100%);
+}
+@-webkit-keyframes blinker {
+			from {
+				opacity: 1.0;
+			}
+
+			to {
+				opacity: 0.0;
+			}
+		}
+
+		.blink {
+			text-decoration: blink;
+			-webkit-animation-name: blinker;
+			-webkit-animation-duration: 0.6s;
+			-webkit-animation-iteration-count: infinite;
+			-webkit-animation-timing-function: ease-in-out;
+			-webkit-animation-direction: alternate;
+		}
+    </style>
+</head>
+  <body>
+   
+      <h6 class="text-ultralight text-center blink" style="position: absolute; left:50%; transform: translateX(-50%);">نسخه آزمایشی</h6>
+    
+    <div id="canvas"></div>
+<script src="https://unpkg.com/three@0.87.1/build/three.js"></script>
+<script src="https://unpkg.com/three@0.87.1/examples/js/controls/OrbitControls.js"></script>
+<script src="https://unpkg.com/three@0.87.1/examples/js/loaders/GLTFLoader.js"></script>
+<script>
+    
+
+
+/*////////////////////////////////////////*/
+
+var renderCalls = [];
+function render () {
+  requestAnimationFrame( render );
+  renderCalls.forEach((callback)=>{ callback(); });
+}
+render();
+
+/*////////////////////////////////////////*/
+
+var scene = new THREE.Scene();
+
+var camera = new THREE.PerspectiveCamera( 80, window.innerWidth / window.innerHeight, 0.1, 800 );
+camera.position.set(0,0,-10);
+
+var renderer = new THREE.WebGLRenderer( { antialias: true , alpha: true } );
+renderer.setPixelRatio( window.devicePixelRatio );
+renderer.setSize( window.innerWidth, window.innerHeight );
+//renderer.setClearColor( backgroundColor );//0x );
+
+//renderer.toneMapping = THREE.LinearToneMapping;
+//renderer.toneMappingExposure = Math.pow( 0.94, 5.0 );
+//renderer.shadowMap.enabled = true;
+//renderer.shadowMap.type = THREE.PCFShadowMap;
+
+window.addEventListener( 'resize', function () {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize( window.innerWidth, window.innerHeight );
+}, false );
+
+document.getElementById('canvas').appendChild(renderer.domElement);
+
+function renderScene(){ renderer.render( scene, camera ); }
+renderCalls.push(renderScene);
+
+/* ////////////////////////////////////////////////////////////////////////// */
+
+var controls = new THREE.OrbitControls( camera );
+
+controls.rotateSpeed = 0.5;
+controls.zoomSpeed = 1;
+
+controls.minDistance = 5;
+controls.maxDistance = 20;
+
+controls.minPolarAngle = 0; // radians
+controls.maxPolarAngle = Math.PI /2; // radians
+
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+
+renderCalls.push(function(){
+  controls.update()
+});
+
+
+/* ////////////////////////////////////////////////////////////////////////// */
+
+
+
+
+var light = new THREE.AmbientLight( 0x20202A, 6, 10 );
+light.position.set( 0, 0, -50 );
+scene.add( light );
+
+/* ////////////////////////////////////////////////////////////////////////// */
+
+
+
+var loader = new THREE.GLTFLoader();
+loader.crossOrigin = true;
+loader.load( 'assets/3D/scene.gltf', function ( data ) {
+
+  
+    var object = data.scene;
+     object.position.set(0, 0, 0);
+//     object.rotation.set(Math.PI / -2, 0, 0);
+
+//     TweenLite.from( object.rotation, 1.3, {
+//       y: Math.PI * 2,
+//       ease: 'Power3.easeOut'
+//     });
+
+    
+    //object.position.y = - 95;
+    scene.add( object );
+  //, onProgress, onError );
+});
+</script>
+  </body>
+</html>
