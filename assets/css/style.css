@@ -65,8 +65,8 @@ box-shadow:  31px 31px 74px #1c905f,
 			border:none;
 			border-radius: 20px;
 			background: linear-gradient(145deg, #22af74, #29d08a);
-			box-shadow:  9px 9px 18px #21a970, 
-						 -9px -9px 18px #2bdb92;
+			box-shadow:  9px 9px 18px rgba(33, 169, 112,0.5), 
+						 -9px -9px 18px rgba(43, 219, 146,0.5);
 		}
 		.bg-white{
 			background:white !important;

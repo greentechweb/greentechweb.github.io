@@ -40,6 +40,7 @@
 			width: 100%;
 			height: 100vh;
 			cursor: none;
+			
 		}
 		.swal2-container{
 			direction: rtl;
@@ -594,12 +595,16 @@ box-shadow:  10px 10px 20px #ced8e5,
 
 
 		<!--shape-->
-		<section id="shape" class="hidden">
+		<section id="shape" class="show">
 			<div class="row rtl">
 
 				<div class="col-7 container-n p-3 justify-content-center" style="height:65vh; overflow-y: scroll;">
 					<h6 class="text-center text-ultralight">لطفا ابعاد گلخانه را به "متر" وارد کنید.</h6>
-					<div class=" mx-auto" style="height:auto; width:30%;">
+					<div class="row justify-content-center">
+						<div class="col-3 d-flex justify-content-center align-items-center">
+							<h3 class="text-center">مثلثی</h3>
+						</div>
+					<div class="col-5 mx-3" style="width:30%; height:auto; ">
 						
 						<div class="scaling-svg-container">
 							<svg id="aa" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
@@ -647,9 +652,11 @@ box-shadow:  10px 10px 20px #ced8e5,
 									<path class="st6 s-hh-m" d="M110.47,45.29V0.57" />
 								  </g>
 							</svg>
-							<h3 class="text-center">مثلثی</h3>
+							
 						</div>
 					</div>
+					
+				</div>
 					<div class="row justify-content-center">
 						<div class="col-4 my-3">
 							<div class="field">
@@ -1165,6 +1172,24 @@ box-shadow:  10px 10px 20px #ced8e5,
 					<div id="nightSlider" style="margin-top:50px;"></div>
 				</div>
 			</div>
+			<div class="row col-8 mx-auto p-4 container-n justify-content-center rtl">
+				<div class="col-5 d-flex justify-content-center align-items-center">
+					<h6 class="text-center">سامانۀ گرمایشی ۱</h6>
+				</div>
+				<div class="col-5">
+					<div class="field">
+						<input type="text" name="username" id="username"
+							class="form-control item-n bg-white text-center" placeholder="ظرفیت (به کیلووات)" required=""
+							autofocus="" style="direction:rtl; ">
+						<label>ظرفیت (به کیلووات)</label>
+					</div>
+					
+				</div>
+				
+			</div>
+			<div class="row justify-content-center">
+				<button class="link btn-n m-4  px-3 py-1 text-center text-ultralight">افزودن</button>
+			</div>
 			<h6 class="text-ultralight text-center rtl mt-4 position-relative" style="z-index:100;">لطفا تعداد دفعات تعویض هوا در ساعت را وارد کنید.</h6>
 			<h6 class="text-bold text-center rtl mb-4" style="font-size: 15px;">(میتوانید از گزینه های پیش فرض زیر استفاده کنید.)</h6>
 			<div class="row col-8 mx-auto p-4 container-n justify-content-center rtl">
@@ -1636,6 +1661,17 @@ box-shadow:  10px 10px 20px #ced8e5,
 	<!--end of main-->
 	<!--sidenav-->
 	<div class="sidenav rounded text-center">
+		<div>
+			<div class="avatar mx-auto"></div>
+			<h6 class="mt-1">
+				حسام سلیمانی
+			</h6>
+			<div class="row justify-content-center">
+				<button data-section="heat" class="hover-bg setting link btn-n mt-1 mb-4  px-3 py-1 text-center text-ultralight"
+					style="bottom:0px;">تنظیمات کاربری</button>
+			</div>
+			
+		</div>
 		<section id="progress">
 			<h6 class="p-name mb-4">پروژۀ اول</h6>
 			<div class="row justify-content-center px-4" style="opacity: 0.8;">
@@ -1683,16 +1719,7 @@ box-shadow:  10px 10px 20px #ced8e5,
 				<h6 class="bg-danger mt-3 px-3 py-1 text-white rounded">لغو</h6>
 			</div>
 		</section>
-		<div class="position-absolute" style="bottom:5%; left:50%; transform: translateX(-50%);">
-			<div class="avatar mx-auto"></div>
-			<br>
-			<h6>
-				حسام سلیمانی
-			</h6>
-			<div class=" hover-bg setting btn-n py-1 px-2 mx-auto ">
-				<h6 class="text-ultralight" style="display:inline;">تنظیمات کاربری</h6>
-			</div>
-		</div>
+		
 	</div>
 	<!--end of sidenav-->
 
