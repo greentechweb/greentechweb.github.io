@@ -98,7 +98,7 @@ box-shadow:  10px 10px 20px #ced8e5,
 			height: 70px;
 			border-radius: 50px;
 			background: linear-gradient(315deg, #1199eb, #0e81c6);
-			box-shadow: -10px -10px 36px #0f84ca, 10px 10px 36px #119aee;
+			box-shadow: -10px -10px 36px rgba(15, 132, 202,0.5), 10px 10px 36px rgba(15, 132, 202,0.6);
 			bottom: 7%;
 			left: 4%;
 		}
@@ -1248,15 +1248,19 @@ box-shadow:  10px 10px 20px #ced8e5,
 			</div>
 		</section>
 		<section id="project" class="show">
-			<div class="row rtl justify-content-center">
-				<div class="col-4 m-4"><img src="assets/img/gh1.png"
-						style="width:80%; height:auto;"></img></div>
-				<div class="add m-4"><button id="add"
-						class="btn-n mt-4" style="vertical-align:middle;">
-						<h6 class="py-2 mx-4 text-ultralight">ایجاد پروژۀ جدید</h6>
-					</button></div>
+			
+		<div class="row rtl justify-content-center align-content-center align-items-center">
+			<div class="col-4  p-4 justify-content-center">
+				<div class="row justify-content-center">
+					<img src="assets/img/gh1.png" style="width:80%; height:auto;"></img>
+				</div>
+				<div class="row justify-content-center">
+					<button id="add" class="btn-n mt-4">
+						<h6 class="py-2 text-ultralight">ایجاد پروژۀ جدید</h6>
+					</button>
+				</div>
 			</div>
-			<table class="mt-4 table-n p-4 table table-hover text-center rtl text-right">
+			<table class="col-7 mt-4 table-n p-4 table table-hover text-center rtl text-right">
 				<tbody>
 					<tr>
 						<th class="text-center" style="width:5%;">۱</th>
@@ -1284,7 +1288,7 @@ box-shadow:  10px 10px 20px #ced8e5,
 					</tr>
 				</tbody>
 			</table>
-			
+		</div>
 		</section>
 		
 		<!--<div class="col-4">
@@ -1656,7 +1660,7 @@ box-shadow:  10px 10px 20px #ced8e5,
 		<div>
 			<div class="avatar mx-auto"></div>
 			<h6 class="mt-1">
-				حسام سلیمانی
+				 کاربر آزمایشی
 			</h6>
 			<div class="row justify-content-center">
 				<button data-section="heat" class="hover-bg setting link btn-n mt-1 mb-4  px-3 py-1 text-center text-ultralight"
@@ -1742,17 +1746,22 @@ box-shadow:  10px 10px 20px #ced8e5,
 				input: 'text',
 
 				showCloseButton: true,
-				confirmButtonText: 'ایجاد',
+				showCancelButton: true,
+				confirmButtonText: 'ثبت',
+				cancelButtonText: 'لغو',
 			}).then((result) => {
     		if (result.value) {
 				
 				Swal.fire({
-  title: 'لطفا بازۀ ارائۀ گزارش را تعیین کنید',
+  title: 'لطفا بازۀ زمانی ارائۀ گزارش خود را تعیین کنید',
   html:
   
     '<input id="swal-input1" class="swal2-input" placeholder="شروع بازه" anyattr onfocus="Mh1PersianDatePicker.Show(this,date);">' +
     '<input id="swal-input2" class="swal2-input" placeholder="پایان بازه" anyattr onfocus="Mh1PersianDatePicker.Show(this,date);">',
   focusConfirm: false,
+  showCancelButton: true,
+	confirmButtonText: 'ثبت',
+	cancelButtonText: 'لغو',
   preConfirm: () => {
     return [
       document.getElementById('swal-input1').value,
