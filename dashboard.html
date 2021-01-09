@@ -1561,11 +1561,19 @@ box-shadow:  9px 9px 17px #b5bfcb,
 				</div>
 			</div>
 			<div class="row link justify-content-center mt-4">
-				<button class="item-n2 py-2 px-4 h6 mt-4"><i class="fa fa-tint"></i> تغییرات رطوبت</button>
+				<div class="item-n2 py-2 px-4 h6 mt-4"><i class="fa fa-tint"></i> تغییرات رطوبت</div>
 			</div>
 			<div class="row justify-content-center mt-2">
 				<div class="col-8">
 					<canvas id="humChart" width="auto" height="auto"></canvas> 
+				</div>
+			</div>
+			<div class="row link justify-content-center mt-4">
+				<div class="item-n2 py-2 px-4 h6 mt-4"><i class="fa fa-tint"></i> تحلیل مالی</div>
+			</div>
+			<div class="row justify-content-center mt-2">
+				<div class="col-8">
+					<canvas id="finChart" width="auto" height="auto"></canvas> 
 				</div>
 			</div>
 			<div class="row link justify-content-center mt-4">
@@ -1959,19 +1967,19 @@ box-shadow:  9px 9px 17px #b5bfcb,
 				<h3 class="text-center mb-4"> گوجه‌فرنگی </h3>
 				<img class="mx-auto" src="assets/img/tomato.png"></img>
 			</div>
-			<div class="container-n p-4 mx-2 mt-4 link" onclick='product("cucam");'>
+			<div class="container-n p-4 mx-2 mt-4 link" onclick='product("Lettuce");'>
 				<h3 class="text-center mb-4"> کاهو </h3>
 				<img class="mx-auto" src="assets/img/Lettuce.png"></img>
 			</div>
-			<div class="container-n p-4 mx-2 mt-4 link" onclick='product("cucamber");'>
+			<div class="container-n p-4 mx-2 mt-4 link" onclick='product("pepper");'>
 				<h3 class="text-center mb-4"> فلفل </h3>
 				<img class="mx-auto" width="width:50%;" src="assets/img/pepper.png"></img>
 			</div>
-			<div class="container-n p-4 mx-2 mt-4 link" onclick='product("cucamber");'>
+			<div class="container-n p-4 mx-2 mt-4 link" onclick='product("davoodi");'>
 				<h3 class="text-center mb-4"> گل داوودی </h3>
 				<img class="mx-auto" src="assets/img/davoodi.png"></img>
 			</div>
-			<div class="container-n p-4 mx-2 mt-4 link" onclick='product("cucamber");'>
+			<div class="container-n p-4 mx-2 mt-4 link" onclick='product("shamdani");'>
 				<h3 class="text-center mb-4"> گل شمعدانی </h3>
 				<img class="mx-auto" src="assets/img/shamdani.png"></img>
 			</div>
@@ -2295,6 +2303,7 @@ box-shadow:  9px 9px 17px #b5bfcb,
     }, 500);
 });
 $("#upload").click(function (event) {
+	
 	upload();
 });
 		function swalerror(){
@@ -2333,28 +2342,67 @@ $("#upload").click(function (event) {
 			.catch(error => console.log('error', error));
 		}
 		function upload(id) {
-			
+			console.log(ghid);
 			const fileInput = document.getElementById('file');
 			if(fileInput.files.length == 0)
-				alert("error");
+			{
+				Swal.fire({
+						icon: 'error',
+						title: 'خطایی رخ داده',
+						text: 'لطفا مطمئن شوید که فایلی را برای آپلود انتخاب کرده اید',
+						confirmButtonText: 'باشه'
+					})	
+			}
 			else{
+				$('.preloader').fadeIn();
+				var myHeaders = new Headers();
+var myHeaders = new Headers();
+			myHeaders.append("Authorization", "Bearer "+params);
+var formdata = new FormData();
+formdata.append("file", fileInput.files[0], "[PROXY]");
+formdata.append("id_greenhouse", ghid);
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: formdata,
+  redirect: 'follow'
+};
+
+fetch("http://127.0.0.1:8000/api/file", requestOptions)
+  .then(response => response.text())
+  .then(result => finance())
+  .catch(error => console.log('error', error));
+			}
+		}
+		function finance(){
 			var myHeaders = new Headers();
+var myHeaders = new Headers();
 			myHeaders.append("Authorization", "Bearer "+params);
 			myHeaders.append("Content-Type", "application/json");
-			var formdata = new FormData();
-			formdata.append("file", fileInput.files[0], "[PROXY]");
-			formdata.append("id_greenhouse", ghid);
-			var requestOptions = {
-				method: 'POST',
-				headers: myHeaders,
-				body: formdata,
-				redirect: 'follow'
-			};
-			fetch("http://127.0.0.1:8000/api/file", requestOptions)
-			.then(response => response.text())
-			.then(result => console.log(result))
-			.catch(error => console.log('error', error));
-			}
+			var raw = JSON.stringify({"id_greenhouse":ghid});
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("http://127.0.0.1:8000/api/file_result", requestOptions)
+  .then(response => response.text())
+  .then(result => showfin(result))
+  .catch(error => console.log('error', error));
+		}
+		function showfin(result){
+			console.log(result);
+			$('.preloader').fadeOut();
+			Swal.fire({
+				icon: 'info',
+				title: ' در این نسخه به دلیل محدودیت های زمانی موجود گزارشات مالی در کنسول مرورگر شما لاگ شده اند (برای مشاهده دقیق تر لطفا از لینک postman که در گزارش قرارگرفته استفاده کنید) و تا زمان ارائه نهایی بستر نمایش خروجی به صورت نمودار های تحلیلی فراهم خواهد شد. ',
+				showConfirmButton: false,
+				timer: 10000
+				})
 		}
 		function createload(id){
 			$('.preloader').fadeOut();
@@ -2736,6 +2784,51 @@ function hum(humdata){
 var y1=[],y2=[],f=0;
 var x=[];
 humdata.data.forEach(function(item){
+	if(f!=0)
+		x.push(item.date.split("-")[2]+"_"+item.time.split(":")[0]);
+	else{
+		x.push(item.date.split("-")[1]+"/"+item.date.split("-")[2]+"_"+item.time);
+		f=1;
+	}
+	y1.push(item.RH_in);
+	y2.push(item.RH_out);
+});
+		var ctx = document.getElementById('humChart').getContext('2d');
+		var myChart = new Chart(ctx, {
+			type: 'line',
+			data: {
+				labels: x,
+				datasets: [{
+					label: 'رطوبت درون',
+					data: y1,
+					borderWidth: 1,
+					fill:false,
+					backgroundColor:'#5cb85c'
+					,borderColor:'#5cb85c'
+				},{
+					label: 'رطوبت بیرون',
+					data: y2,
+					borderWidth: 1,
+					fill:false,
+					backgroundColor:'#5bc0de'
+					,borderColor:'#0275d8'
+				}]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
+						}
+					}]
+				}
+			}
+		});
+}
+function fin(findata){
+var y1=[],y2=[],f=0;
+var x=[];
+findata.data.forEach(function(item){
 	if(f!=0)
 		x.push(item.date.split("-")[2]+"_"+item.time.split(":")[0]);
 	else{
