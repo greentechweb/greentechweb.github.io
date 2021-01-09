@@ -1381,7 +1381,7 @@ box-shadow:  9px 9px 17px #b5bfcb,
 				</div>
 				<div class="col-4">
 					<div class="field">
-						<input type="text" name="cooler_capacity" id="cooler_capacity"
+						<input type="text" name="warmer_capacity" id="warmer_capacity"
 							class="form-control item-n bg-white text-center" placeholder="ظرفیت (به کیلووات)" required=""
 							autofocus="" style="direction:rtl; ">
 						<label>ظرفیت (به کیلووات)</label>
@@ -2103,44 +2103,6 @@ box-shadow:  9px 9px 17px #b5bfcb,
 			}
 		});
 		noUiSlider.create(nightSlider, {
-			start: [17, 20],
-			step: 1,
-			connect: [false, true, false],
-			tooltips: [ wNumb({decimals: 0}), wNumb({decimals: 0})],
-			range: {
-				'min': [10],
-				'max': [30]
-			}
-			,
-			pips: {
-				mode: 'steps',
-				density: 3,
-				format: wNumb({
-					decimals: 0
-				})
-			}
-		});
-		var daySlider2 = document.getElementById('daySlider2');
-		var nightSlider2 = document.getElementById('nightSlider2');
-		noUiSlider.create(daySlider2, {
-			start: [23, 26],
-			step: 1,
-			connect: [false, true, false],
-			tooltips: [ wNumb({decimals: 0}), wNumb({decimals: 0})],
-			range: {
-				'min': [10],
-				'max': [30]
-			}
-			,
-			pips: {
-				mode: 'steps',
-				density: 3,
-				format: wNumb({
-					decimals: 0
-				})
-			}
-		});
-		noUiSlider.create(nightSlider2, {
 			start: [17, 20],
 			step: 1,
 			connect: [false, true, false],
