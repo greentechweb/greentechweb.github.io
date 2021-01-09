@@ -7,13 +7,13 @@ function CityList(state)
 
 		if(state == 0)
 		{
-			options[0] = new Option('لطفا استان را انتخاب نمایید' , '0');
+			options[0] = new Option('لطفا ابتدا استان را انتخاب نمایید' , '0');
 		}
 		
 		if(state == 1)
 		{
 			options[0] = new Option('لطفا شهر را انتخاب نمایید' , '0');
-			options[1] = new Option('احمدآبادمستوفي' , '33131');
+			options[1] = new Option('احمدآبادمستوفي' , '{"longitude": 49.49268,"latitude": 37.32706,"name":"ahmad"}');
 			options[2] = new Option('ادران' , '31541');
 			options[3] = new Option('اسلام آباد' , '18641');
 			options[4] = new Option('اسلام شهر' , '331');

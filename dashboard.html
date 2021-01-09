@@ -20,7 +20,105 @@
 	<script src="assets/framework/noUiSlider-14.6.3/distribute/nouislider.js"></script>
 	<script src="assets/framework/wnumb-1.2.0/wNumb.js"></script>
 	<link href="assets/framework/Mh1PersianDatePicker-master/Mh1PersianDatePicker.css" rel="stylesheet" />
+	<link rel="stylesheet" href="assets/framework/chart/chart.min.css">
+	<script src="assets/framework/chart/chart.min.js"></script>
+	<link rel="stylesheet" href="assets/framework/clockpicker/src/clockpicker.css">
+	<link rel="stylesheet" href="assets/framework/clockpicker/src/standalone.css">
+	<script src="assets/framework/clockpicker/src/clockpicker.js"></script>
+	<script src="assets/framework/snap.svg/snap.svg-min.js"></script>
+	<link rel="stylesheet" href="assets/framework/gantt/frappe-gantt.css" />
+	<script src="assets/framework/gantt/frappe-gantt.js"></script>
 	<style>
+		.t-bold{
+			font-weight: bold;
+		}
+		.icon-scroll {
+	position: absolute;
+	bottom: 5%;
+	right: 10%;
+  width: 1em;
+  transform: scale(1.5);
+	height: 3.125em;
+	z-index: 99999;
+}
+
+.icon-arrows::after,
+.icon-arrows::before {
+  content: '';
+}
+.icon-arrows span,
+.icon-arrows::after,
+.icon-arrows::before {
+	display: block;
+	width: 0.315em;
+	height: 0.315em;
+	border-right: 1px solid  #0e81c6;
+	border-bottom: 1px solid  #0e81c6;
+	margin: 0 0 0.125em 0.315em;
+	transform: rotate(45deg);
+  animation: mouse-scroll 1s infinite;
+	animation-direction: alternate;
+}
+
+.icon-arrows::before {
+	margin-top: 0.315em;
+	animation-delay: .1s;
+}
+
+.icon-scroll span {
+	animation-delay: .2s;
+}
+
+.icon-arrows::after {
+	animation-delay: .3s;
+}
+
+.icon-scroll .mouse {
+	height: 1.375em;
+	width: .875em;
+	border: 1px solid  #0e81c6;
+	border-radius: 2em;
+}
+
+.icon-scroll .wheel {
+  position: relative;
+  display: block;
+  height: 0.1875em;
+  width: 0.1875em;
+  margin: 0.1875em auto 0;
+  background:  #0e81c6;
+  animation: mouse-wheel 1.2s ease infinite;
+  border-radius: 50%;
+}
+
+@keyframes mouse-wheel {
+	0% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	100% {
+		opacity: 0;
+		transform: translateY(.375em);
+	}
+}
+
+@keyframes mouse-scroll {
+	0%   { opacity: 0; }
+	50%  { opacity: .5; }
+	100% { opacity: 1; }
+}
+
+
+
+
+		.font-sm{
+			font-size:10px;
+		}
+		.color{
+			background-color: red;
+			color:red;
+		}
 		html{
 			scroll-behavior: smooth;
 		}
@@ -35,23 +133,21 @@
 		.swal2-container{
 			direction: rtl;
 		}
+		.swal2-title{
+			font-size: 20px !important;
+		}
 		.sidenav {
 			height: auto;
-			min-height: 90%;
-			/* Full-height: remove this if you want "auto" height */
+			height: 90%;
 			width: 15%;
-			/* Set the width of the sidebar */
 			position: fixed;
-			/* Fixed Sidebar (stay in place on scroll) */
-
 			top: 5%;
-			/* Stay at the top */
 			right: 5%;
 			border-radius: 50px;
-			background: linear-gradient(225deg, #e1ecfa, #bdc7d3);
-			box-shadow: -24px 24px 48px #b0bac5, 24px -24px 48px #f4ffff;
+			background: #d4e0ee;
+			box-shadow:  -11px 11px 22px #c5d0dc,
+             11px -11px 22px #dfeaf8;
 			overflow-x: hidden;
-			/* Disable horizontal scroll */
 			padding-top: 20px;
 		}
 		.menu-active{
@@ -73,12 +169,12 @@ box-shadow:  10px 10px 20px #ced8e5,
 			position: fixed;
 			top: 10%;
 			left: 5%;
-			background-color: #d2ddea;
-			box-shadow: 20px 20px 60px #b3bcc7,
-				-20px -20px 60px #f2feff;
+			background: rgb(205, 217, 230);
+			box-shadow:  25px 25px 50px #c5d0dc,
+             -25px -25px 50px #dfeaf8;
 
 			border-radius: 30px 0px 0px 30px;
-			overflow-y: scroll;
+			overflow-y: auto;
 		}
 
 		.sidenav a {
@@ -105,7 +201,17 @@ box-shadow:  10px 10px 20px #ced8e5,
 			bottom: 7%;
 			left: 4%;
 		}
-
+		.editor{
+			position: fixed;
+			width: 40px;
+			height: 40px;
+			border-radius: 50px;
+background: #d2ddea;
+box-shadow:  3px 3px 6px #c1cbd7,
+             -3px -3px 6px #e3effd;
+			bottom: 2%;
+			left: 1%;
+		}
 		.footer {
 			position: fixed;
 			bottom: 1%;
@@ -146,7 +252,13 @@ box-shadow:  10px 10px 20px #ced8e5,
 				-6px -6px 12px #11a0f6;
 
 		}
-
+		.btn-n{
+			border-radius: 50px;
+			background: #26c281;
+			box-shadow: inset 3px 3px 6px #20a56e,
+						inset -3px -3px 6px #2cdf94;
+						color:white;
+		}
 		.btn-b-c {
 			border-radius: 50px;
 			background: linear-gradient(145deg, #0e7cbf, #1094e3);
@@ -251,24 +363,30 @@ box-shadow:  10px 10px 20px #ced8e5,
 
 		.box-n {
 			border-radius: 50px;
-			background: linear-gradient(315deg, #e1ecfa, #bdc7d3);
-			box-shadow: -20px -20px 60px #b3bcc7,
-				20px 20px 60px #f2feff;
+			background: #d2ddea;
+			box-shadow:  -11px -11px 29px #c3ceda,
+						11px 11px 29px #e1ecfa;
 		}
 
 		.container-n {
 			border-radius: 50px;
-			background: #c4cdd8;
-			box-shadow: 20px 20px 42px #b2bbc5,
-				-20px -20px 42px #d6dfeb;
+			background: linear-gradient(145deg, #bdc7d3, #d3dde9);
+box-shadow:  15px 15px 39px #c1cbd7,
+             -15px -15px 39px #dce6f1;
 		}
 
 		.item-n {
 			border-radius: 50px;
 			background: #bdc7d3;
-			box-shadow: 8px 8px 21px #aab3be,
-				-8px -8px 21px #d0dbe8;
+box-shadow:  9px 9px 17px #b5bfcb,
+             -9px -9px 17px #c5cfdb;
 			
+		}
+		.item-n2{
+			border-radius: 50px;
+			background: #d2ddea;
+			box-shadow:  6px 6px 11px #bdc7d3,
+						-6px -6px 11px #e7f3ff;
 		}
 		button{
 			border:none;
@@ -404,25 +522,25 @@ box-shadow:  10px 10px 20px #ced8e5,
 			}
 		}
 		.hdd{
-			fill:#f5a7c4;
+			fill:#005d97;
 		}
 		.hsd{
-			fill:#f4c872;
+			fill:#004169;
 		}
 		.csd{
-			fill:#fdff69;
+			fill:#195275;
 		}
 		.med{
-			fill:#c2e2ff;
+			fill:#0e81c6;
 		}
 		.cas{
-			fill:#23de65;
+			fill:#07a0ff;
 		}
 		.vcm{
-			fill:#e9f1f1;
+			fill:#3b97cf;
 		}
 		.cm{
-			fill:#6ca2ff;
+			fill:#095f94;
 		}
 		.preloader {
    position: absolute;
@@ -579,185 +697,18 @@ box-shadow:  10px 10px 20px #ced8e5,
 	<div class="head d-flex align-items-center">
 		<img class="link logo" src="assets/img/gt-sm.png"></img>
 		<h6 class="d-line mx-2"><i class="fa fa-clock mx-3"></i>۱۵:۳۴</h6>
-		<h6 class="d-line mx-2">دوشنبه ، ۱۵ آذر ۹۹</h6>
+		<h6 class="d-line mx-2">شنبه ، ۲۰ دی ۹۹</h6>
 	</div>
-
-
 	<div class="main p-3">
-
-
+		
 		<!--shape-->
 		<section id="shape" class="hidden">
-			<div class="row rtl">
-
-				<div class="col-7 container-n p-3 justify-content-center" style="height:65vh; overflow-y: scroll;">
-					<h6 class="text-center text-ultralight">لطفا ابعاد گلخانه را به "متر" وارد کنید.</h6>
-					<div class="row justify-content-center">
-						<div class="col-3 d-flex justify-content-center align-items-center">
-							<h3 class="text-center">مثلثی</h3>
-						</div>
-					<div class="col-5 mx-3" style="width:30%; height:auto; ">
-						
-						<div class="scaling-svg-container">
-							<svg id="aa" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
-								xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 135 110"
-								style="enable-background:new 0 0 500 500;" xml:space="preserve">
-								<g>
-									<path class="st0 s-l-m" d="M49.14,100.72l81.19-44.68" />
-									<path class="st0" d="M130.12,28.59v27.89" />
-									<line class="st0" x1="129.81" y1="29" x2="48.62" y2="73.68" />
-									<path class="st0 s-h-m" d="M48.89,101.16V73.27" />
-									<path class="st0" d="M49.14,73.64L29.38,45.06" />
-									<path class="st0" d="M0.04,47.15l29.77-1.87" />
-									<g>
-									  <path class="st1" d="M0.76,74.15l81.19-44.68" />
-									  <g>
-										<g>
-										  <line class="st2" x1="0.76" y1="74.15" x2="2.95" y2="72.94" />
-										  <line class="st3" x1="7.47" y1="70.46" x2="77.5" y2="31.92" />
-										  <line class="st2" x1="79.76" y1="30.67" x2="81.95" y2="29.47" />
-										</g>
-									  </g>
-									</g>
-									<g>
-									  <line class="st1" x1="81.74" y1="2.02" x2="81.74" y2="29.91" />
-									  <g>
-										<line class="st2" x1="81.74" y1="2.02" x2="81.74" y2="4.52" />
-										<line class="st4" x1="81.74" y1="9.1" x2="81.74" y2="25.12" />
-										<line class="st2" x1="81.74" y1="27.41" x2="81.74" y2="29.91" />
-									  </g>
-									</g>
-									<line class="st0" x1="81.43" y1="2.43" x2="0.24" y2="47.11" />
-									<line class="st0" x1="0.51" y1="74.59" x2="0.51" y2="46.7" />
-									<path class="st0 s-w-m" d="M48.63,100.72L0.27,74.11" />
-									<g>
-									  <line class="st1" x1="130.33" y1="56.08" x2="81.97" y2="29.47" />
-									  <g>
-										<line class="st2" x1="130.33" y1="56.08" x2="128.14" y2="54.87" />
-										<line class="st5" x1="124.15" y1="52.67" x2="86.16" y2="31.77" />
-										<line class="st2" x1="84.16" y1="30.67" x2="81.97" y2="29.47" />
-									  </g>
-									</g>
-									<path class="st0" d="M130.23,28.87L110.47,0.29" />
-									<line class="st0" x1="81.13" y1="2.37" x2="110.9" y2="0.5" />
-									<line class="st0" x1="110.67" y1="0.59" x2="29.48" y2="45.27" />
-									<path class="st6 s-hh-m" d="M110.47,45.29V0.57" />
-								  </g>
-							</svg>
-							
-						</div>
-					</div>
-					
-				</div>
-					<div class="row justify-content-center">
-						<div class="col-4 my-3">
-							<div class="field">
-								<input type="text" name="username"
-									class="form-control item-n bg-white text-center" placeholder="نام" required=""
-									autofocus="" style="direction:rtl; ">
-								<label>نام</label>
-							</div>
-						</div>
-					</div>
-					<div class="row justify-content-center">
-						<div class="col-4 my-3">
-							<div class="field">
-								<input type="text" name="username"
-									class="form-control item-n bg-white text-center l-m" placeholder="طول" required=""
-									autofocus="" style="direction:rtl; ">
-								<label>طول</label>
-							</div>
-						</div>
-						<div class="col-4 my-3">
-							<div class="field">
-								<input type="text" name="username"
-									class="form-control item-n bg-white text-center w-m" placeholder="عرض" required=""
-									autofocus="" style="direction:rtl; ">
-								<label>عرض</label>
-							</div>
-						</div>
-						<div class="col-4 my-3">
-							<div class="field">
-								<input type="text" name="username"
-									class="form-control item-n bg-white text-center h-m" placeholder="ارتفاع دیواره"
-									required="" autofocus="" style="direction:rtl; ">
-								<label>ارتفاع دیواره</label>
-							</div>
-						</div>
-						<div class="col-4 my-3">
-							<div class="field">
-								<input type="text" name="username"
-									class="form-control item-n bg-white text-center hh-m" style="font-size: 15px;" placeholder="ارتفاع بلندترین سقف"
-									required="" autofocus="" style="direction:rtl; ">
-								<label>ارتفاع بلندترین سقف</label>
-							</div>
-						</div>
-						<div class="col-4 my-3">
-							<label class="s-label text-bold">پوشش سقف</label>
-							<select id="coverlist" class="form-control " style="width:80%;" name="state"
-								onChange="CityList(this.value); ">
-								<option value="0">بدون پوشش</option>
-								<option value="1">شیشه</option>
-								<option value="2">پلی اتیلن تک‌جداره</option>
-								<option value="3">پلی اتیلن دوجداره</option>
-								<option value="5">پلی کربنات تک‌جداره</option>
-								<option value="6">پلی کربنات دوجداره</option>
-
-							</select>
-						</div>
-						<div class="col-4 my-3">
-							<label class="s-label text-bold">پوشش دیواره</label>
-							<select class="form-control " style="width:80%;" name="state"
-								onChange="CityList(this.value); ">
-								<option value="0">بدون پوشش</option>
-								<option value="1">شیشه</option>
-								<option value="2">پلی اتیلن تک‌جداره</option>
-								<option value="3">پلی اتیلن دوجداره</option>
-								<option value="5">پلی کربنات تک‌جداره</option>
-								<option value="6">پلی کربنات دوجداره</option>
-
-							</select>
-						</div>
-						<script>
-							function blink(id) {
-								$("." + id).focus(function () {
-									$(".s-" + id).addClass("blink");
-								});
-								$("." + id).focusout(function () {
-									$(".s-" + id).removeClass("blink");
-								});
-							}
-							blink("l-m");
-							blink("w-m");
-							blink("h-m");
-							blink("hh-m");
-						</script>
-					</div>
-					<div class="row justify-content-center mb-4">
-						<div class="col-3">
-							<div class="field">
-								<input type="text" name="username" id="username"
-									class="form-control item-n bg-white text-center" placeholder="تعداد" required=""
-									autofocus="" style="direction:rtl; ">
-								<label>تعداد</label>
-							</div>
-						</div>
-						<button class="col-2 btn-n  mx-2">
-							<h6 class="link px-3 py-1 text-center text-ultralight" style="bottom:0px;">افزودن</h6>
-						</button>
-					</div>
-					
-				</div>
-				
-				<div class="position-absolute row" style="bottom:5%; right:25%; ">
-					<button data-section="product" class="section-btn link btn-n px-3 py-1 text-center text-ultralight">ادامه</button>
-				</div>	
-
+			<div class="row">	
 				<div class="col-5">
 					<div class="row container-n p-3 mx-2 justify-content-center"
-						style="height:44vh; overflow-y:scroll;">
-						<div class="col-3 rounded item-n p-2 m-2 ">
-							<div class="scaling-svg-container">
+						style="height:44vh; overflow-y:auto;">
+						<div class="shape-btn col-3 rounded item-n p-2 m-2 link" data-name="triangular" data-value="مثلثی">
+							<div class="scaling-svg-container" >
 								<svg id="aa" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
 									xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 135 110"
 									style="enable-background:new 0 0 500 500;" xml:space="preserve">
@@ -809,7 +760,7 @@ box-shadow:  10px 10px 20px #ced8e5,
 						</div>
 
 						<div class="col-3 rounded item-n p-2 m-2 ">
-							<div class="scaling-svg-container">
+							<div class="scaling-svg-container" style="opacity: 0.5;">
 								
 								<svg id="aa" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
 									xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 135 110"
@@ -863,7 +814,7 @@ box-shadow:  10px 10px 20px #ced8e5,
 						</div>
 
 
-						<div class="col-3 rounded item-n p-2 m-2 ">
+						<div class="shape-btn col-3 rounded item-n p-2 m-2 link"  data-name="arc" data-value="قوس دار">
 							<div class="scaling-svg-container">
 								<svg id="aa" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
 									xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 145 110"
@@ -914,7 +865,7 @@ box-shadow:  10px 10px 20px #ced8e5,
 							</div>
 						</div>
 
-						<div class="col-3 rounded item-n p-2 m-2 ">
+						<div class="shape-btn col-3 rounded item-n p-2 m-2 link"  data-name="arc_wall"  data-value="قوس دار با دیوار عمودی">
 							<div class="scaling-svg-container">
 								
 								<svg id="aa" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
@@ -982,7 +933,7 @@ box-shadow:  10px 10px 20px #ced8e5,
 						</div>
 
 						<div class="col-3 rounded item-n p-2 m-2 ">
-							<div class="scaling-svg-container">
+							<div class="scaling-svg-container"  style="opacity: 0.5;">
 								<svg id="aa" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
 									xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 170 130"
 									style="enable-background:new 0 0 500 500;" xml:space="preserve">
@@ -1037,7 +988,7 @@ box-shadow:  10px 10px 20px #ced8e5,
 						</div>
 
 						<div class="col-3 rounded item-n p-2 m-2 ">
-							<div class="scaling-svg-container">
+							<div class="scaling-svg-container"  style="opacity: 0.5;">
 								<svg id="aa" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
 									xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 180 130"
 									style="enable-background:new 0 0 500 500;" xml:space="preserve">
@@ -1111,223 +1062,427 @@ box-shadow:  10px 10px 20px #ced8e5,
 						</div>
 					</div>
 					<div class="row container-n mx-2 justify-content-center "
-						style="height:24vh; margin-top:4vh; overflow-y:scroll;">
-						<table class=" p-4 table table-hover text-center rtl text-right">
+						style="height:24vh; margin-top:4vh; overflow-y:auto;">
+						<table class=" p-4 table table-bordered table-hover text-center rtl text-right">
 							<thead>
-
 							</thead>
-							<tbody>
+							<tbody id="shapelist" data-value="null">
 								<tr>
-									<td class="col-9">سازۀ اول</td>
-									<td class="col-1">۱x</td>
-									<td class="link col-1"><i class="fa fa-edit"></i></td>
-									<td class="link col-1" ><i class="fa fa-trash"></i></td>
+									<td class="text-muted"><i class="fa fa-leaf fa-4x"></i></td>
 								</tr>
 								<tr>
-									<td class="col-9">سازۀ دوم</td>
-									<td class="col-1">۱x</td>
-									<td class="link col-1"><i class="fa fa-edit"></i></td>
-									<td class="link col-1"><i class="fa fa-trash"></i></td>
-								</tr>
-								<tr>
-									<td class="col-9">سازۀ سوم</td>
-									<td class="col-1">۱x</td>
-									<td class="link col-1"><i class="fa fa-edit"></i></td>
-									<td class="link col-1"><i class="fa fa-trash"></i></td>
-								</tr>
-								<tr>
-									<td class="col-9">سازۀ چهارم</td>
-									<td class="col-1">۱x</td>
-									<td class="link col-1"><i class="fa fa-edit"></i></td>
-									<td class="link col-1"><i class="fa fa-trash"></i></td>
+									<td class="text-muted">لیست سازه های گلخانۀ شما در حال حاضر خالی است.</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
 
+				</div>
+				<div class="col-7 container-n p-4 justify-content-center" style="height:65vh; overflow-y: auto;">
+					
+					<div class="row justify-content-center">
+						<div class="scaling-svg-container"  style="width:30%; height:auto;">
+							<svg id="triangular" class="mainshape" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+								xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 135 110"
+								style="enable-background:new 0 0 500 500;" xml:space="preserve">
+								<g>
+									<path class="st0 s-l-m" d="M49.14,100.72l81.19-44.68" />
+									<path class="st0" d="M130.12,28.59v27.89" />
+									<line class="st0" x1="129.81" y1="29" x2="48.62" y2="73.68" />
+									<path class="st0 s-h-m" d="M48.89,101.16V73.27" />
+									<path class="st0" d="M49.14,73.64L29.38,45.06" />
+									<path class="st0" d="M0.04,47.15l29.77-1.87" />
+									<g>
+									  <path class="st1" d="M0.76,74.15l81.19-44.68" />
+									  <g>
+										<g>
+										  <line class="st2" x1="0.76" y1="74.15" x2="2.95" y2="72.94" />
+										  <line class="st3" x1="7.47" y1="70.46" x2="77.5" y2="31.92" />
+										  <line class="st2" x1="79.76" y1="30.67" x2="81.95" y2="29.47" />
+										</g>
+									  </g>
+									</g>
+									<g>
+									  <line class="st1" x1="81.74" y1="2.02" x2="81.74" y2="29.91" />
+									  <g>
+										<line class="st2" x1="81.74" y1="2.02" x2="81.74" y2="4.52" />
+										<line class="st4" x1="81.74" y1="9.1" x2="81.74" y2="25.12" />
+										<line class="st2" x1="81.74" y1="27.41" x2="81.74" y2="29.91" />
+									  </g>
+									</g>
+									<line class="st0" x1="81.43" y1="2.43" x2="0.24" y2="47.11" />
+									<line class="st0" x1="0.51" y1="74.59" x2="0.51" y2="46.7" />
+									<path class="st0 s-w-m" d="M48.63,100.72L0.27,74.11" />
+									<g>
+									  <line class="st1" x1="130.33" y1="56.08" x2="81.97" y2="29.47" />
+									  <g>
+										<line class="st2" x1="130.33" y1="56.08" x2="128.14" y2="54.87" />
+										<line class="st5" x1="124.15" y1="52.67" x2="86.16" y2="31.77" />
+										<line class="st2" x1="84.16" y1="30.67" x2="81.97" y2="29.47" />
+									  </g>
+									</g>
+									<path class="st0" d="M130.23,28.87L110.47,0.29" />
+									<line class="st0" x1="81.13" y1="2.37" x2="110.9" y2="0.5" />
+									<line class="st0" x1="110.67" y1="0.59" x2="29.48" y2="45.27" />
+									<path class="st6 s-hh-m" d="M110.47,45.29V0.57" />
+								  </g>
+							</svg>
+							<svg id="arc_wall" class="mainshape hidden" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+								xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 150 130"
+								style="enable-background:new 0 0 500 500;" xml:space="preserve">
+								<g>
+									<path class="st0" d="M58.47,88.57l81.19-44.68" />
+									<path class="st6" d="M111.67,59.03V0" />
+									<path class="st0" d="M58.47,116.01l81.19-44.68" />
+									<path class="st0" d="M81.91,23.52 M0.72,68.2" />
+									<path class="st0" d="M16.84,50.95L98.03,6.27" />
+									<g>
+									  <path class="st1" d="M0.73,95.18L81.92,50.5" />
+									  <g>
+										<g>
+										  <line class="st2" x1="0.73" y1="95.18" x2="2.92" y2="93.98" />
+										  <line class="st3" x1="7.44" y1="91.49" x2="77.47" y2="52.95" />
+										  <line class="st2" x1="79.73" y1="51.71" x2="81.92" y2="50.5" />
+										</g>
+									  </g>
+									</g>
+									<g>
+									  <path class="st1" d="M0.73,68.65l81.19-44.68" />
+									  <g>
+										<g>
+										  <line class="st2" x1="0.73" y1="68.65" x2="2.92" y2="67.45" />
+										  <line class="st3" x1="7.44" y1="64.96" x2="77.47" y2="26.42" />
+										  <line class="st2" x1="79.73" y1="25.18" x2="81.92" y2="23.97" />
+										</g>
+									  </g>
+									</g>
+									<path class="st0" d="M57.95,115.86L0.31,95.59" />
+									<g>
+									  <line class="st1" x1="139.38" y1="71.29" x2="81.91" y2="50.52" />
+									  <g>
+										<line class="st2" x1="139.38" y1="71.29" x2="137.03" y2="70.44" />
+										<line class="st8" x1="132.23" y1="68.71" x2="86.66" y2="52.24" />
+										<line class="st2" x1="84.26" y1="51.37" x2="81.91" y2="50.52" />
+									  </g>
+									</g>
+									<path
+									  class="st2"
+									  d="M139.39,44.67c3.43-22.22-11.88-40.44-28.09-41.36c-11.62-0.66-23.64,7.56-29.62,20.43"
+									/>
+									<path
+									  class="st2"
+									  d="M58.2,89.35c3.43-22.22-11.88-40.44-28.09-41.36C18.5,47.33,6.48,55.55,0.5,68.42"
+									/>
+									<path class="st0" d="M58.24,116.42V88.53" />
+									<path class="st0" d="M0.5,96.09V68.2" />
+									<path class="st0" d="M139.44,71.78V43.89" />
+									<g>
+									  <line class="st1" x1="81.91" y1="23.67" x2="81.91" y2="50.5" />
+									  <g>
+										<line class="st2" x1="81.91" y1="23.67" x2="81.91" y2="26.17" />
+										<line class="st10" x1="81.91" y1="30.54" x2="81.91" y2="45.82" />
+										<line class="st2" x1="81.91" y1="48" x2="81.91" y2="50.5" />
+									  </g>
+									</g>
+									<path class="st0" d="M50.97,124.59" />
+								  </g>
+							</svg>
+							<svg id="arc" class="mainshape hidden" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+									xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 145 110"
+									style="enable-background:new 0 0 500 500;" xml:space="preserve">
+									<g>
+										<path class="st0" d="M58.42,86.24l81.19-44.68" />
+										<path class="st0" d="M81.86,20.75 M0.67,65.43" />
+										<path class="st0" d="M16.79,48.17L97.98,3.49" />
+										<g>
+										  <path class="st1" d="M0.68,65.41l81.19-44.68" />
+										  <g>
+											<g>
+											  <line class="st2" x1="0.68" y1="65.41" x2="2.88" y2="64.2" />
+											  <line class="st3" x1="7.39" y1="61.72" x2="77.43" y2="23.18" />
+											  <line class="st2" x1="79.69" y1="21.93" x2="81.88" y2="20.73" />
+											</g>
+										  </g>
+										</g>
+										<g>
+										  <line class="st1" x1="113.3" y1="1.11" x2="113.3" y2="32.41" />
+										  <g>
+											<line class="st2" x1="113.3" y1="1.11" x2="113.3" y2="3.61" />
+											<line class="st7" x1="113.3" y1="8.87" x2="113.3" y2="27.28" />
+											<line class="st2" x1="113.3" y1="29.91" x2="113.3" y2="32.41" />
+										  </g>
+										</g>
+										<path class="st0" d="M57.9,86.08L0.67,65.18" />
+										<g>
+										  <line class="st1" x1="139.33" y1="41.52" x2="81.86" y2="20.75" />
+										  <g>
+											<line class="st2" x1="139.33" y1="41.52" x2="136.98" y2="40.67" />
+											<line class="st8" x1="132.18" y1="38.93" x2="86.61" y2="22.47" />
+											<line class="st2" x1="84.21" y1="21.6" x2="81.86" y2="20.75" />
+										  </g>
+										</g>
+										<path
+										  class="st2"
+										  d="M139.35,41.9c3.43-22.22-11.88-40.44-28.09-41.36C99.65-0.13,87.63,8.09,81.64,20.96"
+										/>
+										<path
+										  class="st2"
+										  d="M58.16,86.58c3.43-22.22-11.88-40.44-28.09-41.36C18.45,44.55,6.43,52.77,0.45,65.64"
+										/>
+									  </g>	
+								</svg>
+						</div>
+					</div>
+					<div class="row justify-content-center">
+						<h3 id="shapename" class="text-center">مثلثی</h3>
+					</div>
+					<h6 class="text-center text-ultralight">لطفا ابعاد گلخانه را به "متر" وارد کنید.</h6>
+			
+					<!--<div class="row justify-content-center">
+						<div class="col-4 my-3">
+							<div class="field">
+								<input type="text" name="ghname"
+									class="form-control item-n bg-white text-center" placeholder="نام" required=""
+									autofocus="" style="direction:rtl; ">
+								<label>نام</label>
+							</div>
+						</div>
+					</div>-->
+					<div class="row justify-content-center">
+						<div class="col-4 my-3">
+							<div class="field">
+								<input type="text" name="length" id="length"
+									class="form-control item-n bg-white text-center l-m" placeholder="طول" required=""
+									autofocus="" style="direction:rtl; ">
+								<label>طول</label>
+							</div>
+						</div>
+						<div class="col-4 my-3">
+							<div class="field">
+								<input type="text" name="width" id="width"
+									class="form-control item-n bg-white text-center w-m" placeholder="عرض" required=""
+									autofocus="" style="direction:rtl; ">
+								<label>عرض</label>
+							</div>
+						</div>
+						<div class="col-4 my-3">
+							<div class="field">
+								<input type="text" name="wall_height" id="wall_height"
+									class="form-control item-n bg-white text-center h-m" placeholder="ارتفاع دیواره"
+									required="" autofocus="" style="direction:rtl; ">
+								<label>ارتفاع دیواره</label>
+							</div>
+						</div>
+						<div class="col-4 my-3">
+							<div class="field">
+								<input type="text" name="roof_height" id="longest_hight"
+									class="form-control item-n bg-white text-center hh-m" style="font-size: 15px;" placeholder="ارتفاع بلندترین سقف"
+									required="" autofocus="" style="direction:rtl;">
+								<label>ارتفاع بلندترین سقف</label>
+							</div>
+						</div>
+						<div class="col-4 my-3">
+							<label class="s-label text-bold">پوشش سقف</label>
+							<select id="roof_cover_type" class="form-control " name="roof_cover_type">
+								<option value="">بدون پوشش</option>
+								<option value="A">شیشه</option>
+								<option value="B">پلی اتیلن تک‌جداره</option>
+								<option value="C">پلی اتیلن دوجداره</option>
+								<option value="D">پلی کربنات تک‌جداره</option>
+								<option value="E">پلی کربنات دوجداره</option>
+
+							</select>
+						</div>
+						<div class="col-4 my-3">
+							<label class="s-label text-bold">پوشش دیواره</label>
+							<select id="wall_cover_type" class="form-control " name="wall_cover_type">
+								<option value="">بدون پوشش</option>
+								<option value="A">شیشه</option>
+								<option value="B">پلی اتیلن تک‌جداره</option>
+								<option value="C">پلی اتیلن دوجداره</option>
+								<option value="D">پلی کربنات تک‌جداره</option>
+								<option value="E">پلی کربنات دوجداره</option>
+
+							</select>
+						</div>
+						<script>
+							function blink(id) {
+								$("." + id).focus(function () {
+									$(".s-" + id).addClass("blink");
+								});
+								$("." + id).focusout(function () {
+									$(".s-" + id).removeClass("blink");
+								});
+							}
+							blink("l-m");
+							blink("w-m");
+							blink("h-m");
+							blink("hh-m");
+						</script>
+					</div>
+					<div class="row justify-content-center mb-4">
+						<!--<div class="col-3">
+							<div class="field">
+								<input type="text" name="username" 
+									class="form-control item-n bg-white text-center" placeholder="تعداد" required=""
+									autofocus="" style="direction:rtl; ">
+								<label>تعداد</label>
+							</div>
+						</div>-->
+						<button id="addshape" class="link btn-n px-4 py-2 text-center h5">افزودن</button>
+					</div>
+					
+				</div>
+				
+				<div class="position-absolute row" style="bottom:5%; right:25%; ">
+					<button id="b-shape" data-section="product" class="section-btn link btn-n px-4 py-2 text-center h5">ادامه</button>
 				</div>
 			</div>
 		</section>
 		
 		<section id="heat" class="hidden">
-			<h6 class="text-ultralight text-center rtl position-relative" style="z-index:100;">لطفا ظرفیت و بازۀ دمایی فعالیت سامانۀ گرمایشی گلخانه را انتخاب کنید.</h6>
-			<h6 class="text-ultralight text-center text-bold rtl position-relative" style="z-index:100;">(بازۀ زمانی پیش فرض بر مبنای محصول مورد نظر مشخص شده‌اند .)</h6>
-			<div class="row">
-				<div class="col-3 row justify-content-center  d-flex justify-content-center align-items-center">
-					<button class="link btn-n mt-4  px-3 py-1 text-center text-ultralight">افزودن سامانۀ جدید</button>
-				</div>
-				<div class="col-1 row justify-content-center  d-flex justify-content-center align-items-center">
-					<button class="link btn-n mt-4 mr-4 px-3 py-1 text-center text-ultralight">ذخیره</button>
-				</div>
-			<div class="col-8  p-4 container-n justify-content-center rtl">
+			<form action="" method="POST" id="f-heat">
+			<h6 class="text-ultralight text-center rtl position-relative" style="z-index:100;">لطفا ظرفیت و بازۀ دمایی فعالیت سامانۀ گرمایشی و سرمایشی گلخانه را انتخاب کنید.</h6>
+			<h6 class="text-ultralight text-center text-bold rtl position-relative mb-2" style="z-index:100;">(بازۀ دمایی پیش فرض بر مبنای محصول مورد نظر مشخص شده‌است.)</h6>
+			<div class="row mt-2 justify-content-center">
+				
+			<div class="col-5 mx-2  p-4 container-n justify-content-center rtl">
 				<div class="row">
 					<div class="col-1 d-flex justify-content-center align-items-center">
 						<h3 class="text-center"><i class="fa fa-fire"></i></h3>
 					</div>
-				<div class="col-5 d-flex justify-content-center align-items-center">
-					<h6 class="text-center">سامانۀ گرمایشی ۱</h6>
+				<div class="col-4 d-flex justify-content-center align-items-center">
+					<h6 id="coolername" class="text-center">سامانۀ سرمایشی ۱</h6>
 				</div>
-				<div class="col-5">
+				<div class="col-4">
 					<div class="field">
-						<input type="text" name="username" id="username"
+						<input type="text" name="cooler_capacity" id="cooler_capacity"
 							class="form-control item-n bg-white text-center" placeholder="ظرفیت (به کیلووات)" required=""
 							autofocus="" style="direction:rtl; ">
 						<label>ظرفیت (به کیلووات)</label>
 					</div>
 					
 				</div>
+				<div class="col-2 justify-content-center  d-flex justify-content-center align-items-center mx-2">
+					<button id="addcooler" class="linkmt-4 btn-n px-4 py-2 text-center h5">افزودن</button>
+				</div>
+			</div>
+			</div>
+			
+		
+				
+			<div class="col-5 ml-4  p-4 container-n justify-content-center rtl">
+				<div class="row">
+					<div class="col-1 d-flex justify-content-center align-items-center">
+						<h3 class="text-center"><i class="fa fa-fire"></i></h3>
+					</div>
+				<div class="col-4 d-flex justify-content-center align-items-center">
+					<h6 id="warmername" class="text-center">سامانۀ گرمایشی ۱</h6>
+				</div>
+				<div class="col-4">
+					<div class="field">
+						<input type="text" name="cooler_capacity" id="cooler_capacity"
+							class="form-control item-n bg-white text-center" placeholder="ظرفیت (به کیلووات)" required=""
+							autofocus="" style="direction:rtl; ">
+						<label>ظرفیت (به کیلووات)</label>
+					</div>
+					
+				</div>
+				<div class="col-2 justify-content-center  d-flex justify-content-center align-items-center mx-2">
+					<button id="addwarmer" class="linkmt-4 btn-n px-4 py-2 text-center h5">افزودن</button>
+				</div>
 			</div>
 			</div>
 			
 		</div>
-			<div class="row justify-content-center my-4">
-				<div class=" mx-2 justify-content-center "
-						style="overflow-y:scroll;">
+			<div class="row justify-content-center mt-4">
+				<div class="col-2 mx-2 justify-content-center "
+				style="overflow-y:auto; overflow-x:hidden; max-height:300px;">
 						<table class=" p-4 table table-hover text-center rtl text-right">
-							<thead>
-
-							</thead>
-							<tbody>
+							<tbody id="coolerlist" data-value="null">
 								<tr>
-									<td class="col-9">سامانه گرمایشی ۱</td>
-									<td class="link col-1"><i class="fa fa-edit"></i></td>
-									<td class="link col-1" ><i class="fa fa-trash"></i></td>
+									<td class="col-11 text-muted"><i class="fa fa-snowflake-o fa-4x"></i></td>
 								</tr>
 								<tr>
-									<td class="col-9">سامانه گرمایشی ۲</td>
-									<td class="link col-1"><i class="fa fa-edit"></i></td>
-									<td class="link col-1"><i class="fa fa-trash"></i></td>
-								</tr>
-								<tr>
-									<td class="col-9">سامانه گرمایشی ۳</td>
-									<td class="link col-1"><i class="fa fa-edit"></i></td>
-									<td class="link col-1"><i class="fa fa-trash"></i></td>
-								</tr>
-								<tr>
-									<td class="col-9">سامانه گرمایشی ۴</td>
-									<td class="link col-1"><i class="fa fa-edit"></i></td>
-									<td class="link col-1"><i class="fa fa-trash"></i></td>
+									<td class="col-11 text-muted text-center">لیست سامانه های سرمایشی شما فعلا خالی است.</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
-				<div class="col-4 container-n mx-2" style="padding-top:30px; padding-bottom: 60px;">
+				<div class="col-3 container-n mx-2" style="padding-top:30px; padding-bottom: 60px;">
 					<h5 class="text-center mb-4">روز</h5>
 					<img class="text-center" src="assets/img/sun2.png" style="width: 30%; height:auto; margin: auto;  display: block; opacity:0.8;"></img>
 					<div id="daySlider"  style="margin-top:50px;"></div>
 				</div>
-				<div class="col-4 container-n mx-2" style="padding-top:30px; padding-bottom: 60px;">
+				<div class="col-3 container-n mx-2" style="padding-top:30px; padding-bottom: 60px;">
 					<h5 class="text-center mb-4" >شب</h5>
 					<img class="text-center" src="assets/img/moon.png" style="width: 30%; height:auto; margin: auto;  display: block; opacity:0.8;"></img>
 					<div id="nightSlider" style="margin-top:50px;"></div>
 				</div>
-				
-			</div>
-			<div class="row  justify-content-center">
-				<a href="#colding" class="h5 text-bold text-warning blink scrolls-btn link m-4  px-3 py-1 text-center text-ultralight">سامانۀ سرمایشی <i class="fa fa-arrow-circle-down"></i></a>
-			</div>
-			<br/>
-			<br/>
-			<div id="colding">
-			<h6 class="text-ultralight text-center rtl position-relative" style="z-index:100;">لطفا ظرفیت و بازۀ دمایی فعالیت سامانۀ گرمایشی گلخانه را انتخاب کنید.</h6>
-			<h6 class="text-ultralight text-center text-bold rtl position-relative" style="z-index:100;">(بازۀ زمانی پیش فرض بر مبنای محصول مورد نظر مشخص شده‌اند .)</h6>
-			<div class="row">
-				<div class="col-3 row justify-content-center  d-flex justify-content-center align-items-center">
-					<button class="link btn-n mt-4  px-3 py-1 text-center text-ultralight">افزودن سامانۀ جدید</button>
-				</div>
-				<div class="col-1 row justify-content-center  d-flex justify-content-center align-items-center">
-					<button class="link btn-n mt-4 mr-4 px-3 py-1 text-center text-ultralight">ذخیره</button>
-				</div>
-			<div class="col-8  p-4 container-n justify-content-center rtl">
-				<div class="row">
-					<div class="col-1 d-flex justify-content-center align-items-center">
-						<h3 class="text-center"><i class="fa fa-snowflake-o"></i></h3>
-					</div>
-				<div class="col-5 d-flex justify-content-center align-items-center">
-					<h6 class="text-center">سامانۀ سرمایشی ۱</h6>
-				</div>
-				<div class="col-5">
-					<div class="field">
-						<input type="text" name="username" id="username"
-							class="form-control item-n bg-white text-center" placeholder="ظرفیت (به کیلووات)" required=""
-							autofocus="" style="direction:rtl; ">
-						<label>ظرفیت (به کیلووات)</label>
-					</div>
-					
-				</div>
-			</div>
-			</div>
-			
-		</div>
-			<div class="row justify-content-center my-4">
-				<div class=" mx-2 justify-content-center "
-						style="overflow-y:scroll;">
+				<div class="col-2 mx-2 justify-content-center "
+						style="overflow-y:auto; max-height:300px;">
 						<table class=" p-4 table table-hover text-center rtl text-right">
-							<thead>
-
-							</thead>
-							<tbody>
+							<tbody id="warmerlist" data-value="null">
 								<tr>
-									<td class="col-9">سامانه سرمایشی ۱</td>
-									<td class="link col-1"><i class="fa fa-edit"></i></td>
-									<td class="link col-1" ><i class="fa fa-trash"></i></td>
+									<td class="col-11 text-muted"><i class="fa fa-fire fa-4x"></i></td>
 								</tr>
 								<tr>
-									<td class="col-9">سامانه سرمایشی ۲</td>
-									<td class="link col-1"><i class="fa fa-edit"></i></td>
-									<td class="link col-1"><i class="fa fa-trash"></i></td>
-								</tr>
-								<tr>
-									<td class="col-9">سامانه سرمایشی ۳</td>
-									<td class="link col-1"><i class="fa fa-edit"></i></td>
-									<td class="link col-1"><i class="fa fa-trash"></i></td>
-								</tr>
-								<tr>
-									<td class="col-9">سامانه سرمایشی ۴</td>
-									<td class="link col-1"><i class="fa fa-edit"></i></td>
-									<td class="link col-1"><i class="fa fa-trash"></i></td>
+									<td class="col-11 text-muted text-center">لیست سامانه های گرمایشی شما فعلا خالی است.</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
+			</div>
+			<!--<div class="row  justify-content-center">
+				<a href="#colding" class="h5 text-bold text-warning blink scrolls-btn link m-4  px-3 py-1 text-center text-ultralight">سامانۀ سرمایشی <i class="fa fa-arrow-circle-down"></i></a>
+			</div>-->
+			
+			<!--<div id="colding">
+			<h6 class="text-ultralight text-center rtl position-relative" style="z-index:100;">لطفا ظرفیت و بازۀ دمایی فعالیت سامانۀ گرمایشی گلخانه را انتخاب کنید.</h6>
+			<h6 class="text-ultralight text-center text-bold rtl position-relative" style="z-index:100;">(بازۀ زمانی پیش فرض بر مبنای محصول مورد نظر مشخص شده‌اند .)</h6>
+			-->
+			<!--<div class="row justify-content-center my-4">
+				
 				<div class="col-4 container-n mx-2" style="padding-top:30px; padding-bottom: 60px;">
 					<h5 class="text-center mb-4">روز</h5>
 					<img class="text-center" src="assets/img/sun2.png" style="width: 30%; height:auto; margin: auto;  display: block; opacity:0.8;"></img>
 					<div id="daySlider2"  style="margin-top:50px;"></div>
 				</div>
 				<div class="col-4 container-n mx-2" style="padding-top:30px; padding-bottom: 60px;">
-					<h5 class="text-center mb-4" >شب</h5>
+					<h5 class="text-center mb-4">شب</h5>
 					<img class="text-center" src="assets/img/moon.png" style="width: 30%; height:auto; margin: auto;  display: block; opacity:0.8;"></img>
 					<div id="nightSlider2" style="margin-top:50px;"></div>
 				</div>
 				
 			</div>
+			</div>-->
+			<div class="row mt-4 justify-content-center">
+				<button type="submit" data-section="ventilation" class="section-btn link btn-n px-4 py-2 text-center h5">ادامه</button>
 			</div>
-			<div class="row  justify-content-center">
-				<button data-section="ventilation" class="section-btn link btn-n m-4  px-3 py-1 text-center text-ultralight">ادامه</button>
-			</div>
+		</form>
 		</section>
 		<section id="ventilation" class="hidden">
 			<h6 class="text-ultralight text-center rtl mt-2 position-relative" style="z-index:100;">لطفا تعداد دفعات تعویض هوا در ساعت را وارد کنید.</h6>
-			<h6 class="text-bold text-center rtl mb-4" style="font-size: 15px;">(میتوانید از گزینه های پیش فرض زیر استفاده کنید.)</h6>
-			
+			<h6 class="text-bold text-center rtl mb-4" style="font-size: 15px;">(میتوانید از گزینه های پیش فرض استفاده کنید یا عدد مورد نظر خودتان را وارد کنید.)</h6>
+			<form action="" method="POST" id="f-ventilation">
 			<div class="row col-8 mx-auto p-4 container-n justify-content-center rtl">
 				<img class="mb-4" src="assets/img/gh2.png"></img>
 				<div class="row">
-				<div class="col-5">
+				<div class="col-7">
 					<label class="s-label text-bold">نوع گلخانه</label>
-					<select id="ghlist" class="form-control " style="width:80%;" name="state">
-						<option value="1">نوساز با شیشه</option>
-						<option value="2">نوساز با پوشش پلاستیکی</option>
-						<option value="3">قدیمی با شرایط قابل قبول</option>
-						<option value="4">قدیمی با شرایط قدیمی</option>
+					<select id="greenhouse_type" class="form-control " style="width:80%;" name="state" onchange="$('#ventilagin_every_houre').val($('#greenhouse_type option:selected').attr('data-value'))">
+						<option value="" data-value="">نامشخص</option>
+						<option value="A" data-value="0.86">نوساز با شیشه</option>
+						<option value="B" data-value="0.75">نوساز با پوشش پلاستیکی</option>
+						<option value="C" data-value="1.5">قدیمی با شرایط قابل قبول</option>
+						<option value="D" data-value="3">قدیمی با شرایط ضعیف</option>
 					</select>
 				</div>
-				<div class="col-6">
+				<div class="col-5">
 					<div class="field">
-						<input type="text" name="username" id="username"
-							class="form-control item-n bg-white text-center" placeholder="دفعات تعویض هوا در ساعت" required=""
-							autofocus="" style="direction:rtl; ">
+						<input type="text" name="ventilagin_every_houre" id="ventilagin_every_houre"
+						class="form-control item-n bg-white text-center" placeholder="دفعات تعویض هوا در ساعت" required=""
+						autofocus="" style="direction:rtl; ">
 						<label>دفعات تعویض هوا در ساعت</label>
 					</div>
 				</div>
@@ -1335,8 +1490,9 @@ box-shadow:  10px 10px 20px #ced8e5,
 			</div>
 			
 			<div class="row  justify-content-center">
-				<button data-section="finance" class="section-btn link btn-n m-4  px-3 py-1 text-center text-ultralight">ادامه</button>
+				<button type="submit" data-section="finance" class="section-btn link btn-n m-4  px-4 py-2 text-center h5">ادامه</button>
 			</div>
+		</form>
 		</section>
 		<section id="finance" class="hidden">
 			<h6 class="text-ultralight text-center rtl">لطفا در صورت تمایل برای دریافت تحلیل های مالی، فایل اکسل زیر را دانلود کرده و بعد از تکمیل، آپلود نمایید.</h6>
@@ -1360,7 +1516,7 @@ box-shadow:  10px 10px 20px #ced8e5,
 				</div>
 			</div>
 			<div class="row  justify-content-center">
-				<button id="finish" data-section="report" class="section-btn link btn-n m-4  px-3 py-1 text-center text-ultralight">اتمام</button>
+				<button id="finish" class="link btn-n m-4  px-4 py-2 text-center h5">اتمام</button>
 			</div>
 		</section>
 		<section id="report" class="hidden">
@@ -1368,21 +1524,52 @@ box-shadow:  10px 10px 20px #ced8e5,
 			<h6 class="text-bold text-center rtl mb-4" style="font-size: 15px;">برای دریافت توضیحات مفصل تر گزینه "گزارش کامل" را انتخاب کنید.</h6>
 			<div class="row col-8 mx-auto p-4 container-n justify-content-center">
 				<div class="col-4">
-					<img src="assets/img/analytics.png" style="width:100%;"></img>
+					<img src="assets/img/analytics.png" style="width:80%;"></img>
 				</div>
 				<div class="col-8">
-					<div class="row mt-4 justify-content-center">
-						<h5 class="mt-4">نگاه کلی</h5>
+				<div class="row rtl">
+					<div class="col-4 mx-3">
+						<!--<div class="row mt-4 justify-content-center">
+							<h5 class="mt-4">نگاه کلی</h5>
+						</div>-->
+						<div class="row mt-4 justify-content-center">
+							<h2 class="p-name mt-4">پروژۀ اول</h2>	
+						</div>
 					</div>
-					<div class="row mt-1 justify-content-center">
-						<h2 class="p-name">پروژۀ اول</h2>
-						
+					<div class="col-4">
+						<div class="row link justify-content-center mt-4">
+							<button class=" item-n py-2 px-4 h6 mt-4" onclick="location.href='#''"><i class="fa fa-download"></i> دریافت فایل اکسل گزارش</button>
+						</div>
 					</div>
+				</div>
+				</div>
+			</div>
+			<div class="row link justify-content-center mt-4">
+				<button class="item-n2 py-2 px-4 h6 mt-4"><i class="fa fa-thermometer-half"></i> تغییرات دما</button>
+			</div>
+			<div class="row justify-content-center mt-2">
+				<div class="col-8">
+					<canvas id="tempChart" width="auto" height="auto"></canvas> 
+				</div>
+			</div>
+			<div class="row link justify-content-center mt-4">
+				<button class="item-n2 py-2 px-4 h6 mt-4"><i class="fa fa-tint"></i> تغییرات رطوبت</button>
+			</div>
+			<div class="row justify-content-center mt-2">
+				<div class="col-8">
+					<canvas id="humChart" width="auto" height="auto"></canvas> 
+				</div>
+			</div>
+			<div class="row link justify-content-center mt-4">
+				<button class="item-n2 py-2 px-4 h6 mt-4"><i class="fa fa-th"></i> بازه های فعالیت سیستم های سرمایشی و گرمایشی</button>
+			</div>
+			<div class="row justify-content-center mt-2">
+				<div class="col-8 justify-content-center" id="grantt">
+					
 				</div>
 			</div>
 		</section>
 		<section id="project" class="show">
-			
 		<div class="row rtl justify-content-center align-content-center align-items-center">
 			<div class="col-4  p-4 justify-content-center">
 				<div class="row justify-content-center">
@@ -1390,44 +1577,32 @@ box-shadow:  10px 10px 20px #ced8e5,
 				</div>
 				<div class="row justify-content-center">
 					<button id="add" class="btn-n mt-4">
-						<h6 class="py-2 text-ultralight">ایجاد پروژۀ جدید</h6>
+						<h6 class="px-4 py-2 h5">ایجاد پروژۀ جدید</h6>
 					</button>
 				</div>
 			</div>
 			<table class="col-7 mt-4 table-n p-4 table table-hover text-center rtl text-right">
-				<tbody>
+				<tbody id="projectlist" data-value="null">
 					<tr>
+						<td class="text-muted"><i class="fa fa-leaf fa-4x"></i></td>
+					</tr>
+					<tr>
+						<td class="text-muted">لیست پروژه های شما در حال حاضر خالی است.</td>
+					</tr>
+					<!--<tr>
 						<th class="text-center" style="width:5%;">۱</th>
 						<td style="width:61%;">پروژۀ اول</td>
 						<td style="width:10%;"></td>
 						<td class="link" style="width:8%;"><i class="fa fa-edit"></i></td>
 						<td class="link" style="width:8%;"><i class="fa fa-eye"></i></td>
 						<td class="link" style="width:8%;"><i class="fa fa-trash"></i></td>
-					</tr>
-					<tr>
-						<th class="text-center" style="width:5%;">۲</th>
-						<td style="width:61%;">پروژۀ دوم</td>
-						<td style="width:10%;"></td>
-						<td class="link" style="width:8%;"><i class="fa fa-edit"></i></td>
-						<td class="link" style="width:8%;"><i class="fa fa-eye"></i></td>
-						<td class="link" style="width:8%;"><i class="fa fa-trash"></i></td>
-					</tr>
-					<tr>
-						<th class="text-center" style="width:5%;">۳</th>
-						<td style="width:61%;">پروژۀ سوم</td>
-						<td style="width:10%;"></td>
-						<td class="link" style="width:8%;"><i class="fa fa-edit"></i></td>
-						<td class="link" style="width:8%;"><i class="fa fa-eye"></i></td>
-						<td class="link" style="width:8%;"><i class="fa fa-trash"></i></td>
-					</tr>
+					</tr>-->					
 				</tbody>
 			</table>
 		</div>
 		</section>
 		
-		<!--<div class="col-4">
-				<canvas id="myChart" width="auto" height="auto"></canvas> 
-			</div>
+		<!--
 			<div class="col-4">
 				<div class="tab"></div>
 			</div>
@@ -1458,6 +1633,7 @@ box-shadow:  10px 10px 20px #ced8e5,
 		<section id="map" class="hidden">
 			<div class="row rtl justify-content-center">
 				<div class="col-5 rtl justify-content-center">
+					<form action="" method="POST" id="f-map">
 					<h6 class="text-ultralight text-center m-4">لطفا محل قرارگیری گلخانه را انتخاب کنید.</h6>
 					<h3 id="cityname" class="text-bold text-center mb-4"><i class="fa fa-map-marked m-3"></i></h3>
 					<div class="row justify-content-center">
@@ -1467,7 +1643,7 @@ box-shadow:  10px 10px 20px #ced8e5,
 						<select id="statelist" class="form-control mx-auto my-2"  name="state"
 							onChange="CityList(this.value); ">
 							<option value="0">استان</option>
-							<option value="1">تهران</option>
+							<option value="1" data-name="tehran">تهران</option>
 							<option value="2">گیلان</option>
 							<option value="3">آذربایجان شرقی</option>
 							<option value="4">خوزستان</option>
@@ -1502,7 +1678,7 @@ box-shadow:  10px 10px 20px #ced8e5,
 					</div>
 					<div class="col-5 my-1">
 						<label class="s-label text-bold">شهر</label>
-						<select class="form-control mx-auto my-2" name="city" id="city">
+						<select class="form-control mx-auto my-2" name="city" id="city" onChange="$('#longitude').val(JSON.parse($('#city option:selected').val()).longitude);$('#latitude').val(JSON.parse($('#city option:selected').val()).latitude)">
 							<option value="0">ابتدا استان را انتخاب کنید</option>
 						</select>
 					</div>
@@ -1512,13 +1688,13 @@ box-shadow:  10px 10px 20px #ced8e5,
 						<img src="assets/img/map.png" class="d-flex mx-auto mt-2 mb-4"
 							style="width:50%; height:auto;"></img>
 						<div class="field col-5 mx-2">
-							<input type="text" name="username" id="username"
+							<input type="text" name="username" id="longitude"
 								class="form-control box-n bg-white mb-4 text-center" placeholder="طول جغرافیایی"
 								required="" autofocus="" style="direction:rtl; ">
 							<label>طول جغرافیایی</label>
 						</div>
 						<div class="field col-5 mx-2">
-							<input type="text" name="username" id="username"
+							<input type="text" name="username" id="latitude"
 								class="form-control box-n bg-white mb-4 text-center" placeholder="عرض جغرافیایی"
 								required="" autofocus="" style="direction:rtl; ">
 							<label>عرض جغرافیایی</label>
@@ -1528,9 +1704,9 @@ box-shadow:  10px 10px 20px #ced8e5,
 						</h6>
 					</div>
 					<div class="row justify-content-center">
-						<button data-section="shape" class="section-btn link btn-n m-4  px-3 py-1 text-center text-ultralight"
-							>ادامه</button>
+						<button type="submit" data-section="shape" class="section-btn link btn-n m-4 px-4 py-2 text-center h5">ادامه</button>
 					</div>
+				</form>
 				</div>
 				<div class="col-7 align-items-center">
 					<svg viewBox="0 0 550 500" style="overflow: visible; position: relative;" version="1.1"
@@ -1672,7 +1848,7 @@ box-shadow:  10px 10px 20px #ced8e5,
 							</path>
 						</a>
 
-						<a xlink:href="#" xlink:title="تهران و البرز">
+						<a xlink:href="#" xlink:title="تهران و البرز" onclick="select(1);">
 							<path class="path-city csd"
 								d="M439.7,331.7C435.4,331.8,434.9,332.5,436.4,338C438.2,344.2,445.3,342.5,448.9,347.8C452.5,353.2,445.3,354.1,441.8,363C438.2,371.9,427.5,370.1,423,371.9C419.9,373.1,420.3,379.4,420.7,383.2C422,382.8,423,382.6,423,382.6C423,382.6,426.6,387.1,431,387.1C435.5,387.1,436.3,388,442.6,388C448.8,388,447.1,394.3,450.6,390.7C454.2,387.1,457.8,390.7,457.8,390.7C457.8,390.7,464.9,395.2,464.9,400.5C464.9,405.3,458.5,414.4,455.8,421.4C462.6,421.7,468.2,421.9,470.2,421.9C477.3,421.9,505,436.2,512.2,436.2C519.3,436.2,520.2,441.6,530,444.3C530.1,444.3,530.2,444.4,530.3,444.4C531.1,443,533.2,442.1,535.3,438.9C538.9,433.5,543.3,433.5,537.1,428.2C530.9,422.8,527.3,422,527.3,413C527.3,404,525.5,399.6,530,399.6C534.5,399.6,535.4,396,538,399.6C540.7,403.2,549.6,409.4,557.6,409.4C565.6,409.4,578.1,415.7,583.5,415.7C588.9,415.7,603.2,411.2,609.4,405C615.6,398.8,616.5,392.5,613.8,385.4C611.1,378.3,611.1,378.2,611.1,378.2C611.1,378.2,611.9,377.9,612.7,377.7C607.9,374.2,603.7,371.2,602.2,370.2C596.8,366.6,598.6,370.2,594.2,375.5C589.7,380.9,587.1,370.2,579.9,370.2C572.8,370.2,574.5,362.2,567.4,366.6C560.3,371.1,560.3,370.2,557.6,376.4C554.9,382.6,547.8,378.2,543.3,377.3C538.8,376.4,530.8,370.1,529,365.7C527.2,361.2,514.7,357.7,507.6,357.7C500.5,357.7,504,358.6,498.7,352.4C493.3,346.2,488.9,345.2,484.4,345.2C479.9,345.2,477.3,338.1,470.1,338.1C463,338.1,447.8,331.8,441.6,331.8C441,331.7,440.3,331.6,439.7,331.7L439.7,331.7ZM455.9,421.4C455.8,421.8,455.6,422.1,455.5,422.5C455.6,422.1,455.7,421.7,455.9,421.4Z"
 								stroke-width="5.2631578947368425" stroke-opacity="1"
@@ -1766,28 +1942,28 @@ box-shadow:  10px 10px 20px #ced8e5,
 		</section>
 		<section id="product" class="hidden rtl" style="width:100%; height:100%;">
 			<h6 class="text-center"> لطفا محصول گلخانه خود را انتخاب کنید. </h6>
-			<div class="row mt-1 justify-content-center" >
-			<div class="container-n p-4 mx-2 mt-4 link" onclick="product();">
+			<div class="row mt-1 justify-content-center mb-4" >
+			<div class="container-n p-4 mx-2 mt-4 link" onclick='product("cucamber");'>
 				<h3 class="text-center mb-4"> خیار </h3>
 				<img class="mx-auto" src="assets/img/cucamber.png"></img>
 			</div>
-			<div class="container-n p-4 mx-2 mt-4 link" onclick="product();">
+			<div class="container-n p-4 mx-2 mt-4 link" onclick='product("cucamber");'>
 				<h3 class="text-center mb-4"> گوجه‌فرنگی </h3>
 				<img class="mx-auto" src="assets/img/tomato.png"></img>
 			</div>
-			<div class="container-n p-4 mx-2 mt-4 link" onclick="product();">
+			<div class="container-n p-4 mx-2 mt-4 link" onclick='product("cucamber");'>
 				<h3 class="text-center mb-4"> کاهو </h3>
 				<img class="mx-auto" src="assets/img/Lettuce.png"></img>
 			</div>
-			<div class="container-n p-4 mx-2 mt-4 link" onclick="product();">
+			<div class="container-n p-4 mx-2 mt-4 link" onclick='product("cucamber");'>
 				<h3 class="text-center mb-4"> فلفل </h3>
 				<img class="mx-auto" width="width:50%;" src="assets/img/pepper.png"></img>
 			</div>
-			<div class="container-n p-4 mx-2 mt-4 link" onclick="product();">
+			<div class="container-n p-4 mx-2 mt-4 link" onclick='product("cucamber");'>
 				<h3 class="text-center mb-4"> گل داوودی </h3>
 				<img class="mx-auto" src="assets/img/davoodi.png"></img>
 			</div>
-			<div class="container-n p-4 mx-2 mt-4 link" onclick="product();">
+			<div class="container-n p-4 mx-2 mt-4 link" onclick='product("cucamber");'>
 				<h3 class="text-center mb-4"> گل شمعدانی </h3>
 				<img class="mx-auto" src="assets/img/shamdani.png"></img>
 			</div>
@@ -1801,46 +1977,60 @@ box-shadow:  10px 10px 20px #ced8e5,
 	<!--end of main-->
 	<!--sidenav-->
 	<div class="sidenav rounded text-center">
-		<div>
-			<div class="avatar mx-auto"></div>
-			<h6 class="mt-1">
+		<!--<div id="scroll" class="hidden">
+		<div class="icon-scroll">
+			<div class="mouse">
+			  <div class="wheel"></div>
+			</div>
+			<div class="icon-arrows">
+			  <span></span>
+			</div>
+			
+		  </div>
+		  <h6 class="blink" style="position: absolute;
+		  bottom: 2%; font-size:13px; max-width: 60%; left:10%; color:#0e81c6;">برای مشاهدۀ سامانۀ سرمایشی پایین بیایید</h6>
+			
+		</div>-->
+		<div class="avatar mx-auto"></div>
+			<h6 id="username" class="mt-1">
 				 کاربر آزمایشی
 			</h6>
 			<div class="row justify-content-center">
-				<button data-section="heat" class="hover-bg setting link btn-n mt-1 mb-4  px-3 py-1 text-center text-ultralight"
+				<button class="hover-bg setting link btn-n mt-1 mb-2  px-3 py-1 text-center"
 					style="bottom:0px;">تنظیمات کاربری</button>
 			</div>
-		</div>
 		<section id="progress">
-			<h6 class="p-name mb-4">پروژۀ اول</h6>
+			<h6 class="p-name mb-2">پروژۀ اول</h6>
+			<div style="max-height:42%; overflow-y:auto; overflow-x: hidden;">
 			<div class="row justify-content-center px-4" style="opacity: 0.8;">
 				<div id="map-b" class="col-8 justify-content-center align-items-center borders pb-2">
 					<div id="map-c" class="rounded circle position-absolute"></div>
-					<h6 data-section="map" class="section-btn h-sm text-ultralight">موقعیت</h6>
+					<h6 data-section="map" class="section-btn h-sm text-ultralight t-bold" id="map-t">موقعیت</h6>
 				</div>
 				<div id="shape-b" class="col-8 justify-content-center align-items-center borders pb-2">
 					<div id="shape-c" class=" rounded position-absolute circle"></div>
-					<h6 data-section="shape" class="section-btn h-sm text-ultralight">سازه</h6>
+					<h6 data-section="shape" class="section-btn h-sm text-ultralight" id="shape-t">سازه</h6>
 				</div>
 				<div id="product-b"  class="col-8 justify-content-center align-items-center borders pb-2">
 					<div id="product-c" class=" rounded position-absolute circle"></div>
-					<h6 data-section="product" class="section-btn h-sm text-ultralight">محصول</h6>
+					<h6 data-section="product" class="section-btn h-sm text-ultralight" id="product-t">محصول</h6>
 				</div>
 				<div id="heat-b"  class="col-8 justify-content-center align-items-center borders pb-2">
 					<div id="heat-c" class=" rounded position-absolute circle"></div>
-					<h6 data-section="heat" class="section-btn h-sm text-ultralight">سامانه گرمایشی و سرمایشی</h6>
+					<h6 data-section="heat" class="section-btn h-sm text-ultralight" id="heat-t">سامانه گرمایشی و سرمایشی</h6>
 				</div>
 				<div id="ventilation-b" class="col-8 justify-content-center align-items-center borders pb-2">
 					<div id="ventilation-c" class=" rounded position-absolute circle"></div>
-					<h6 data-section="ventilation" class="section-btn h-sm text-ultralight">سامانه تهویه</h6>
+					<h6 data-section="ventilation" class="section-btn h-sm text-ultralight" id="ventilation-t">سامانه تهویه</h6>
 				</div>
 				<div id="finance-b"  class="col-8 justify-content-center align-items-center borders pb-2">
 					<div id="finance-c" class=" rounded position-absolute circle"></div>
-					<h6 data-section="finance" class="section-btn h-sm text-ultralight">تحلیل مالی</h6>
+					<h6 data-section="finance" class="section-btn h-sm text-ultralight" id="finance-t">تحلیل مالی</h6>
 				</div>
 			</div>
+			</div>
 			<div class="row justify-content-center rtl">
-				<div class="col-4 mx-1 link row justify-content-center">
+				<div id="menufinish" class="col-4 mx-1 link row justify-content-center">
 					<h6 class="bg-info mt-3 px-3 py-1 text-white rounded">اتمام</h6>
 				</div>
 				<div class="col-4 cancel link row justify-content-center">
@@ -1850,11 +2040,9 @@ box-shadow:  10px 10px 20px #ced8e5,
 		</section>
 		<section id="menu">
 			<div class="row justify-content-center m-2">
-				<h6 class="menu-active py-2 px-4 text-ultralight col-10 rtl link"><i class="fa fa-tasks"></i> لیست پروژه ها</h6>
+				<h6 class="menu-item py-2 px-4 text-ultralight col-10 rtl link"><i class="fa fa-tasks"></i> لیست پروژه ها</h6>
 			</div>
-			<div class="row justify-content-center m-2">
-				<div  class="menu-item py-2 px-4 text-ultralight rtl col-10 link h6" onclick="window.open('3Deditor.html','3Deditor','width=600,height=400')"><i class="fa fa-cubes"></i> ویرایشگر سه‌بعدی گلخانه</div>
-			</div>
+			
 		</section>
 		<section id="report-menu">
 			<div class="row justify-content-center m-2">
@@ -1866,8 +2054,9 @@ box-shadow:  10px 10px 20px #ced8e5,
 			<div class="cancel link row justify-content-center">
 				<h6 class="bg-danger mt-3 px-3 py-1 text-white rounded">لغو</h6>
 			</div>
+			
 		</section>
-		
+	
 	</div>
 	<!--end of sidenav-->
 
@@ -1875,11 +2064,14 @@ box-shadow:  10px 10px 20px #ced8e5,
 		<i class="fa fa-comment fa-2x text-white"></i>
 
 	</div>
-
+	<div class="link editor d-flex justify-content-center align-items-center"  onclick="window.open('3Deditor.html','3Deditor','width=600,height=400')">
+		<i class="fa fa-cubes"></i>
+	</div>
 	<div class="footer text-center">
 		<h6 class="d-line link">سبز پایش افرا © ۱۳۹۹</h6>
 		<img class="logo link" src="assets/img/logo-sm.png"></img>
 	</div>
+	<h6 class="link hover h-editor" onclick="window.open('3Deditor.html','3Deditor','width=600,height=400')">3D<br/>editor</h6>
 	<h6 class="link hover h-support">پشتیبانی</h6>
 	<h6 class="link hover h-edit text-bold">ویرایش</h6>
 	<h6 class="link hover h-setting"><i class="fa fa-cog"></i></h6>
@@ -1889,178 +2081,6 @@ box-shadow:  10px 10px 20px #ced8e5,
 	<!--sweetalert-->
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	<script src="assets/framework/Mh1PersianDatePicker-master/Mh1PersianDatePicker.js"></script>
-	<script>
-		var date="1399/09/26";
-		$("#add").click(function () {
-			Swal.fire({
-				
-				title: 'لطفا نام پروژه را وارد کنید',
-				input: 'text',
-
-				showCloseButton: true,
-				showCancelButton: true,
-				confirmButtonText: 'ثبت',
-				cancelButtonText: 'لغو',
-			}).then((result) => {
-    		if (result.value) {
-				
-				Swal.fire({
-  title: 'لطفا بازۀ زمانی ارائۀ گزارش خود را تعیین کنید',
-  html:
-  
-    '<input id="swal-input1" class="swal2-input" placeholder="شروع بازه" anyattr onfocus="Mh1PersianDatePicker.Show(this,date);">' +
-    '<input id="swal-input2" class="swal2-input" placeholder="پایان بازه" anyattr onfocus="Mh1PersianDatePicker.Show(this,date);">',
-  focusConfirm: false,
-  showCancelButton: true,
-	confirmButtonText: 'ثبت',
-	cancelButtonText: 'لغو',
-  preConfirm: () => {
-    return [
-      document.getElementById('swal-input1').value,
-      document.getElementById('swal-input2').value
-    ]
-  }
-  
-}).then((date) => {
-	if (date.value) {
-				$(".show").toggleClass("show hidden");
-				$("#map").toggleClass("hidden show");
-				$("#progress").css("display", "initial");
-				$("#menu").css("display", "none");
-				var name=result.value;
-				$(".p-name").text(result.value);
-				$("#map-c").toggleClass("circle c-active");
-				$("#map-b").toggleClass("borders b-active");
-	}
-			});
-			 }
-			});
-		});
-		$(".section-btn").click(async function () {
-			$(".show").toggleClass("show hidden");
-			$("#"+$(this).attr("data-section")).toggleClass("show hidden");
-			$(".c-active").toggleClass("c-active circle");
-			$(".b-active").toggleClass("b-active borders");
-			$("#"+$(this).attr("data-section")+"-c").toggleClass("circle c-active");
-			$("#"+$(this).attr("data-section")+"-b").toggleClass("borders b-active");
-		});
-		$(".cancel").click(async function () {
-			$("#progress").css("display", "none");
-			$("#menu").css("display", "initial");
-			$("#report-menu").css("display", "none");
-			$(".show").toggleClass("show hidden");
-			$("#project").toggleClass("hidden show");
-			$(".c-active").toggleClass("c-active circle");
-			$(".b-active").toggleClass("b-active borders");
-			$("#project-c").toggleClass("circle c-active");
-			$("#project-b").toggleClass("borders b-active");
-		});
-		$("#finish").click(async function () {
-			$("#progress").css("display", "none");
-			$("#menu").css("display", "none");
-			$("#report-menu").css("display", "initial");
-		});
-		function product(){
-			Swal.fire({
-  title: 'آیا از انتخاب خود مطمئنید؟',
-  showCancelButton: true,
-  confirmButtonText: `ادامه`,
-  cancelButtonText: `لغو`,
-}).then((result) => {
-  /* Read more about isConfirmed, isDenied below */
-  if (result.isConfirmed) {
-    $(".show").toggleClass("show hidden");
-			$("#heat").toggleClass("show hidden");
-			$(".c-active").toggleClass("c-active circle");
-			$(".b-active").toggleClass("b-active borders");
-			$("#heat-c").toggleClass("circle c-active");
-			$("#heat-b").toggleClass("borders b-active");
-  } 
-})
-		}
-		$(".scroll-btn").click(function (event) {
-    event.preventDefault();
-
-    $('html, body').animate({
-        scrollTop: $($.attr(this, 'href')).offset().top
-    }, 500);
-});
-	</script>
-	<!--hover-->
-	<script>
-		function hovern(bg, layer, e) {
-			var p = $(bg).offset();
-
-			if ((e.pageX >= p.left) && (e.pageY >= p.top) && (e.pageX <= (p.left + $(bg).width())) && (e.pageY <= (p.top + $(bg).height()))) {
-				$(layer).css('display', 'initial');
-				$(layer).css('left', e.pageX - $(layer).width() / 2 + "px");
-				$(layer).css('top', e.pageY - $(layer).height() / 2 + "px");
-				$(layer).css('cursor', 'none');
-			}
-			else {
-				$(layer).css('display', 'none');
-			}
-		}
-		$(document).mousemove(function (e) {
-			hovern('.setting', '.h-setting', e);
-			hovern('.support', '.h-support', e);
-			//hovern('.add','.h-add',e);
-		});
-	</script>
-
-	
-	<!--cursor-->
-	<script>
-		var cursor = $(".cursor"),
-			follower = $(".cursor-follower");
-
-		var posX = 0,
-			posY = 0;
-
-		var mouseX = 0,
-			mouseY = 0;
-
-		TweenMax.to({}, 0.016, {
-			repeat: -1,
-			onRepeat: function () {
-				posX += (mouseX - posX) / 9;
-				posY += (mouseY - posY) / 9;
-
-				TweenMax.set(follower, {
-					css: {
-						left: posX - 6,
-						top: posY - 6
-					}
-				});
-				TweenMax.set(cursor, {
-					css: {
-						left: mouseX,
-						top: mouseY
-					}
-				});
-			}
-		});
-
-		$(document).on("mousemove", function (e) {
-			mouseX = e.pageX;
-			mouseY = e.pageY;
-		});
-
-		$(".link").on("mouseenter", function () {
-			cursor.addClass("active");
-			follower.addClass("active");
-		});
-
-		$(".link").on("mouseleave", function () {
-			cursor.removeClass("active");
-			follower.removeClass("active");
-		});
-	</script>
-	<script>
-		$(".fa-trash").click(function(){
-			$(this).closest('tr').remove();
-		});
-	</script>
 	<script>
 		var daySlider = document.getElementById('daySlider');
 		var nightSlider = document.getElementById('nightSlider');
@@ -2140,10 +2160,680 @@ box-shadow:  10px 10px 20px #ced8e5,
 		});
 	</script>
 	<script>
-		 $(window).on('load', function () {
-      
-   $('.preloader').fadeOut('slow');
-});					
+		var gh={},userdata={};
+		gh.warmer=new Array;
+		gh.cooler=new Array;
+		gh.longitude=49.49268;
+		gh.latitude=37.32706;
+		gh.shape_type="triangular";
+		var ghid,shapeindex=1,warmerindex=1,coolerindex=1;
+		let params = new URLSearchParams(location.search);
+		params.get('');
+		
+		var date="1399/09/26";
+		function select(value){
+			$('#statelist option[value='+value+']').prop('selected', true);
+			CityList(value);
+		}
+		$(".main").scroll(function() {
+  			if ($(".main").scrollTop() >= 200) {
+				$("#scroll").fadeOut();
+			}
+			else{
+				//$("#scroll").fadeIn();
+			}
+		});
+		$("#add").click(function () {
+			Swal.fire({
+				
+				title: 'لطفا نام پروژه را وارد کنید',
+				input: 'text',
+
+				showCloseButton: true,
+				showCancelButton: true,
+				confirmButtonText: 'ثبت',
+				cancelButtonText: 'لغو',
+			}).then((result) => {
+    		if (result.value) {
+				
+				Swal.fire({
+  title: 'لطفا بازۀ زمانی ارائۀ گزارش خود را تعیین کنید',
+  html:
+  '<div class="row">'+
+		'<div class="col">'+
+			'<input id="swal-input1" class="form-control read" placeholder="تاریخ شروع بازه" anyattr onfocus="Mh1PersianDatePicker.Show(this,date);">' +
+		'</div>'+
+		'<div class="col">'+
+			'<div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">'+
+				'<input name="start_time" id="start_time" type="text" class="form-control read" placeholder="ساعت شروع بازه" required>'+
+			'</div>'+
+		'</div>'+
+	'</div>'+
+	'<div class="row mt-4">'+
+		'<div class="col">'+
+			'<input id="swal-input2" class="form-control read" placeholder="تاریخ پایان بازه" anyattr onfocus="Mh1PersianDatePicker.Show(this,date);">' +
+		'</div>'+
+		'<div class="col">'+
+			'<div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">'+
+				'<input name="end_time" id="end_time" type="text" class="form-control read" placeholder="ساعت پایان بازه" required>'+
+			'</div>'+
+		'</div>'+
+	'</div>',
+  focusConfirm: false,
+  showCancelButton: true,
+	confirmButtonText: 'ثبت',
+	cancelButtonText: 'لغو',
+
+	onOpen: function() {
+        $('.clockpicker').clockpicker();
+    },
+  preConfirm: () => {
+    return [
+      document.getElementById('swal-input1').value,
+      document.getElementById('swal-input2').value
+    ]
+  }
+  
+}).then((date) => {
+	gh.start_date=$('#swal-input1').val().split('/').join('-');
+	gh.end_date=$('#swal-input2').val().split('/').join('-');
+	gh.start_time=$('#start_time').val();
+    gh.end_time=$('#end_time').val();
+	if (date.value) {
+				$(".show").toggleClass("show hidden");
+				$("#map").toggleClass("hidden show");
+				$("#progress").css("display", "initial");
+				$("#menu").css("display", "none");
+				gh.name=result.value;
+				$(".p-name").text(result.value);
+				$("#map-c").toggleClass("circle c-active");
+				$("#map-b").toggleClass("borders b-active");
+	}
+			});
+			 }
+			});
+		});
+		$(".shape-btn").click(function () {
+			gh.shape_type=$(this).data('name');
+	
+			if(gh.shape_type!="triangular"){
+				$("#longest_hight").val("");
+				$("#longest_hight").css("display", "none");
+			}
+			else{
+				$("#longest_hight").css("display", "initial");
+			}
+			$(".mainshape").css("display", "none");
+			$("#"+$(this).data('name')).css("display", "initial");
+			document.getElementById('shapename').innerHTML=$(this).data('value');
+		});
+		$(".section-btn").click(async function () {
+			$(".show").toggleClass("show hidden");
+			$("#"+$(this).attr("data-section")).toggleClass("show hidden");
+			$(".c-active").toggleClass("c-active circle");
+			$(".b-active").toggleClass("b-active borders");
+			$(".t-bold").removeClass("t-bold");
+			$("#"+$(this).attr("data-section")+"-c").toggleClass("circle c-active");
+			$("#"+$(this).attr("data-section")+"-b").toggleClass("borders b-active");
+			$("#"+$(this).attr("data-section")+"-t").addClass("t-bold");
+			if($(this).attr("data-section")=="heat"){
+				$("#scroll").css("display", "initial");
+			}
+			else{
+				$("#scroll").css("display", "none");
+			}
+		});
+		$(".cancel").click(async function () {
+			$("#progress").css("display", "none");
+			$("#menu").css("display", "initial");
+			$("#report-menu").css("display", "none");
+			$(".show").toggleClass("show hidden");
+			$("#project").toggleClass("hidden show");
+			$(".c-active").toggleClass("c-active circle");
+			$(".b-active").toggleClass("b-active borders");
+			$("#project-c").toggleClass("circle c-active");
+			$("#project-b").toggleClass("borders b-active");
+		});
+		function product(name){
+			gh.plant_name=name;
+			
+			Swal.fire({
+  title: 'آیا از انتخاب خود مطمئنید؟',
+  showCancelButton: true,
+  confirmButtonText: `ادامه`,
+  cancelButtonText: `لغو`,
+}).then((result) => {
+  if (result.isConfirmed) {
+	$("#scroll").css("display", "initial");
+    $(".show").toggleClass("show hidden");
+			$("#heat").toggleClass("show hidden");
+			$(".c-active").toggleClass("c-active circle");
+			$(".b-active").toggleClass("b-active borders");
+			$("#heat-c").toggleClass("circle c-active");
+			$("#heat-b").toggleClass("borders b-active");
+			$(".t-bold").removeClass("t-bold");
+			$("#heat-t").addClass("t-bold");
+  } 
+})
+		}
+		$(".scroll-btn").click(function (event) {
+    event.preventDefault();
+
+    $('html, body').animate({
+        scrollTop: $($.attr(this, 'href')).offset().top
+    }, 500);
+});
+
+		function swalerror(){
+				Swal.fire({
+					icon: 'error',
+					title: 'متاسفیم',
+					text: 'نام کاربری یا رمز عبور اشتباه است ',
+					confirmButtonText: 'باشه'
+				})
+		}
+		function draw(in1){
+			graph(in1);
+		}
+		function get(id) {
+			var myHeaders = new Headers();
+			myHeaders.append("Authorization", "Bearer "+params);
+			myHeaders.append("Content-Type", "application/json");
+			var raw = JSON.stringify({"id_greenhouse":id});
+			var requestOptions = {
+			method: 'POST',
+			headers: myHeaders,
+			body: raw,
+			redirect: 'follow'
+			};
+			fetch("http://127.0.0.1:8000/api/warmer_cooler_graph", requestOptions)
+			.then(response => response.json())
+			.then(result => gentt(result))
+			.catch(error => console.log('error', error));
+			fetch("http://127.0.0.1:8000/api/T_graph", requestOptions)
+			.then(response => response.json())
+			.then(result => temp(result))
+			.catch(error => console.log('error', error));
+			fetch("http://127.0.0.1:8000/api/humidity_graph", requestOptions)
+			.then(response => response.json())
+			.then(result => hum(result))
+			.catch(error => console.log('error', error));
+		}
+		function create(input) {
+			var myHeaders = new Headers();
+			myHeaders.append("Authorization", "Bearer "+params);
+			myHeaders.append("Content-Type", "application/json");
+			var requestOptions = {
+				method: 'POST',
+				headers: myHeaders,
+				body: JSON.stringify(input),
+				redirect: 'follow'
+			};
+			fetch("http://127.0.0.1:8000/api/create_greenhouse", requestOptions)
+			.then(response => response.json())
+			.then(result =>ghid=result.data.id)
+			.catch(error => console.log('error', error));
+		}
+		function user() {
+			var myHeaders = new Headers();
+			myHeaders.append("Authorization", "Bearer "+params);
+			myHeaders.append("Content-Type", "application/json");
+			var requestOptions = {
+				method: 'POST',
+				headers: myHeaders,
+				redirect: 'follow'
+			};
+			fetch("http://127.0.0.1:8000/api/get_user", requestOptions)
+			.then(response => response.json())
+			.then(result => document.getElementById('username').innerHTML=result.user.name)
+			.catch(error => console.log('error', error));
+		}
+		user();
+		function ghdata(input){
+			if(input.length!=0)
+			{
+				document.getElementById('projectlist').innerHTML="";
+			}
+			input.forEach(function(item){
+			var tr=document.createElement('tr');
+			var td=document.createElement('td');
+			var id=item.id;
+			td.innerHTML=id;
+			tr.appendChild(td);
+			var td=document.createElement('td');
+			td.innerHTML=item.name;
+			tr.appendChild(td);
+			/*var td=document.createElement('td');
+			td.innerHTML='<i class="fa fa-edit"></i>';
+			tr.appendChild(td);*/
+			var td=document.createElement('td');
+			//$('#stop').click(function() {
+     		$(td).attr('onClick','showreport('+id+')');
+			td.innerHTML='<i class="fa fa-eye"></i>';
+			td.className="link";
+			tr.appendChild(td);
+			var td=document.createElement('td');
+			td.innerHTML='<i class="fa fa-trash"></i>';
+			tr.appendChild(td);
+			document.getElementById('projectlist').appendChild(tr);
+			});
+		}
+		$("#addshape").click(function () {
+			if($("#shapelist").attr("data-value")=="null")
+			{
+				if(gh.shape_type=="triangular")
+					gh.longest_hight=parseFloat($("#longest_hight").val());
+				document.getElementById('shapelist').innerHTML="";
+				$("#shapelist").attr('data-value', 'true');
+				console.log($("#shapelist").attr("data-value"));
+				gh.length=parseFloat($("#length").val());
+				gh.width=parseFloat($("#width").val());
+				gh.wall_hight=parseFloat($("#wall_height").val());
+				gh.roof_cover_type=$('#roof_cover_type option:selected').val();
+				gh.wall_cover_type=$('#wall_cover_type option:selected').val();
+				var tr=document.createElement('tr');
+				var td=document.createElement('td');
+				td.innerHTML="سازۀ "+shapeindex++;
+				td.className="col-6";
+				tr.appendChild(td);
+				var td=document.createElement('td');
+				td.innerHTML='<i class="fa fa-edit"></i>';
+				td.className="col-2 link edit";
+				tr.appendChild(td);
+				var td=document.createElement('td');
+				td.innerHTML='<i class="fa fa-trash"></i>';
+				td.className="col-2 link delete";
+				tr.appendChild(td);
+				document.getElementById('shapelist').appendChild(tr);
+			}
+			else{
+				Swal.fire({
+				icon: 'info',
+				title: 'افزودن چند سازه در این نسخه پشتیبانی نمی شود.',
+				showConfirmButton: false,
+				timer: 1500
+				})
+			}
+			
+		});
+		$(".delete").click(function(){
+			alert("aaaaaaaaaaaaaaaaaaa");
+			Swal.fire({
+				icon: 'info',
+				title: 'حذف آيتم در این نسخه پشتیبانی نمی شود.',
+				showConfirmButton: false,
+				timer: 1000
+				});
+		});
+		$(".edit").click(function(){
+			alert("aaaaaaaaaaaaaaaaaaa");
+			Swal.fire({
+				icon: 'info',
+				title: 'ویرایش آيتم در این نسخه پشتیبانی نمی شود.',
+				showConfirmButton: false,
+				timer: 1000
+				});
+		});
+		$("#addwarmer").click(function (event) {
+			event.preventDefault();
+			if($("#warmerlist").attr("data-value")=="null")
+			{
+				document.getElementById('warmerlist').innerHTML="";
+				$("#warmerlist").attr('data-value', 'true');
+			}
+			gh.warmer[warmerindex-1]={
+				warmer_number:warmerindex,
+            	warmer_capacity: parseFloat($("#warmer_capacity").val())
+			};
+			var tr=document.createElement('tr');
+			var td=document.createElement('td');
+			
+			td.innerHTML="سامانۀ گرمایشی "+warmerindex++;
+			document.getElementById("warmername").innerHTML="سامانۀ گرمایشی "+warmerindex;
+			td.className="col-6";
+			tr.appendChild(td);
+			var td=document.createElement('td');
+			td.innerHTML='<i class="fa fa-edit"></i>';
+			td.className="col-2 link";
+			tr.appendChild(td);
+			var td=document.createElement('td');
+			td.innerHTML='<i class="fa fa-trash"></i>';
+			td.className="col-2 link";
+			tr.appendChild(td);
+			document.getElementById('warmerlist').appendChild(tr);
+		});
+		$("#addcooler").click(function (event) {
+			event.preventDefault();
+			if($("#coolerlist").attr("data-value")=="null")
+			{
+				document.getElementById('coolerlist').innerHTML="";
+				$("#coolerlist").attr('data-value', 'true');
+			}
+			gh.cooler[coolerindex-1]={
+				cooler_number:coolerindex,
+            	cooler_capacity: parseFloat($("#cooler_capacity").val())
+			};
+			var tr=document.createElement('tr');
+			var td=document.createElement('td');
+			td.innerHTML="سامانۀ سرمایشی "+coolerindex++;
+			document.getElementById("coolername").innerHTML="سامانۀ سرمایشی "+coolerindex;
+			td.className="col-6";
+			tr.appendChild(td);
+			var td=document.createElement('td');
+			td.innerHTML='<i class="fa fa-edit"></i>';
+			td.className="col-2 link";
+			tr.appendChild(td);
+			var td=document.createElement('td');
+			td.innerHTML='<i class="fa fa-trash"></i>';
+			td.className="col-2 link";
+			tr.appendChild(td);
+			document.getElementById('coolerlist').appendChild(tr);
+		});
+		function getgh() {
+			var myHeaders = new Headers();
+			myHeaders.append("Authorization", "Bearer "+params);
+			myHeaders.append("Content-Type", "application/json");
+			var requestOptions = {
+				method: 'POST',
+				headers: myHeaders,
+				redirect: 'follow'
+			};
+			fetch("http://127.0.0.1:8000/api/get_all_greenhouse", requestOptions)
+			.then(response => response.json())
+			.then(result => ghdata(result.data))
+			.catch(error => console.log('error', error));
+		}
+		getgh();
+		$( "#f-map" ).submit(function(event){
+			event.preventDefault();
+			var pos=JSON.parse($('#city option:selected').val());
+			gh.longitude=parseFloat($("#longitude").val());
+			gh.latitude=parseFloat($("#latitude").val());
+			gh.city=pos.name;
+			gh.state=$('#statelist option:selected').data('name');
+		});
+		$( "#b-shape" ).click(function(event){
+			
+		});
+		$( "#f-heat" ).submit(function(event){
+			event.preventDefault();
+			var daySlider = document.getElementById('daySlider');
+			var nightSlider = document.getElementById('nightSlider');
+			gh.T_max_day=Math.floor(daySlider.noUiSlider.get()[1]);
+			gh.T_min_day=Math.floor(daySlider.noUiSlider.get()[0]);
+			gh.T_max_night=Math.floor(nightSlider.noUiSlider.get()[1]);
+			gh.T_min_night=Math.floor(nightSlider.noUiSlider.get()[0]);
+			//console.log(gh);
+		});
+		$( "#f-ventilation" ).submit(function(event){
+			event.preventDefault();
+			gh.ventilagin_every_houre=parseFloat($("#ventilagin_every_houre").val());
+			gh.greenhouse_type=$('#greenhouse_type option:selected').val();
+			console.log(gh);
+			create(gh);
+			setTimeout(() => {
+				console.log(ghid);	
+			},6000);
+			
+		});
+		function showreport(id){
+			document.getElementById('grantt').innerHTML="";
+			$(".show").toggleClass("show hidden");
+			$("#report").toggleClass("show hidden");
+			$("#progress").css("display", "none");
+			$("#menu").css("display", "none");
+			$("#report-menu").css("display", "initial");
+			get(id);
+		}
+		$("#finish").click(function(event){
+			event.preventDefault();
+			showreport(ghid);
+		});
+		$("#menufinish").click(function(event){
+			event.preventDefault();
+			showreport(ghid);	
+		});
 	</script>
+	<!--hover-->
+	<script>
+		function hovern(bg, layer, e) {
+			var p = $(bg).offset();
+
+			if ((e.pageX >= p.left) && (e.pageY >= p.top) && (e.pageX <= (p.left + $(bg).width())) && (e.pageY <= (p.top + $(bg).height()))) {
+				$(layer).css('display', 'initial');
+				$(layer).css('left', e.pageX - $(layer).width() / 2 + "px");
+				$(layer).css('top', e.pageY - $(layer).height() / 2 + "px");
+				$(layer).css('cursor', 'none');
+			}
+			else {
+				$(layer).css('display', 'none');
+			}
+		}
+		$(document).mousemove(function (e) {
+			hovern('.setting', '.h-setting', e);
+			hovern('.support', '.h-support', e);
+			hovern('.editor', '.h-editor', e);
+			//hovern('.add','.h-add',e);
+		});
+	</script>
+	<!--graph-->
+	<script>
+function gentt(genttdata){
+var table = document.createElement('table');
+var tr1 = document.createElement('tr');   
+var tr2 = document.createElement('tr');  
+var tr3 = document.createElement('tr'); 
+var thead = document.createElement('thead');   
+var tbody = document.createElement('tbody');  
+var text=document.createTextNode(".");
+var th = document.createElement('th');
+th.className="p-1";
+th.appendChild(text);
+tr1.appendChild(th);
+var text=document.createTextNode("سرمایشی");
+var th = document.createElement('th');
+th.className="bg-light p-2 text-center";
+th.appendChild(text);
+th.innerHTML += `<i class="fa fa-snowflake-o">`;
+tr2.appendChild(th);
+var text=document.createTextNode("گرمایشی");
+var th = document.createElement('th');
+th.className="bg-light p-2 text-center";
+th.appendChild(text);
+th.innerHTML += `<i class="fa fa-fire">`;
+tr3.appendChild(th);
+genttdata.data.forEach(function(item){
+	var td = document.createElement('td');
+	if(item.cooler!=null)
+		td.className="bg-info";
+	tr2.appendChild(td);
+	var td = document.createElement('td');
+	if(item.warmer!=null)
+		td.className="bg-danger";
+	tr3.appendChild(td);
+	var th = document.createElement('th');
+	th.className="text-center";
+	th.innerHTML +='<h6 class="font-sm">'+item.date.split("-")[1]+'/'+item.date.split("-")[2]+'</h6><h6 class="font-sm">'+item.time+'</h6>';
+	tr1.appendChild(th);
+});
+		table.className="table table-bordered table-hover table-responsive";
+		thead.className="thead-light";
+		tbody.appendChild(tr2);
+		tbody.appendChild(tr3);
+		thead.appendChild(tr1);
+		table.appendChild(thead);
+		table.appendChild(tbody);
+		document.getElementById("grantt").appendChild(table);
+}
+/////////////
+function temp(tempdata){
+var y1=[],y2=[],y3=[],y4=[],f=0;
+var x=[];
+tempdata.data.forEach(function(item){
+	if(f!=0)
+		x.push(item.date.split("-")[2]+"_"+item.time.split(":")[0]);
+	else{
+		x.push(item.date.split("-")[1]+"/"+item.date.split("-")[2]+"_"+item.time);
+		f=1;
+	}
+	y1.push(item.T_in);
+	y2.push(item.T_out);
+	y3.push(item.max);
+	y4.push(item.min);
+});
+		var ctx = document.getElementById('tempChart').getContext('2d');
+		var myChart = new Chart(ctx, {
+			type: 'line',
+			data: {
+				labels: x,
+				datasets: [{
+					label: 'دمای درون',
+					data: y1,
+					borderWidth: 1,
+					fill:false,
+					backgroundColor:'#5cb85c'
+					,borderColor:'#5cb85c'
+				},{
+					label: 'دمای بیرون',
+					data: y2,
+					borderWidth: 1,
+					fill:false,
+					backgroundColor:'#5bc0de'
+					,borderColor:'#0275d8'
+				},{
+					label: 'ماکسیمم دما',
+					data: y3,
+					borderWidth: 1,
+					fill:false,
+					backgroundColor:'#d9534f'
+					,borderColor:'#d9534f',
+					steppedLine:true
+				},{
+					label: 'مینیمم دما',
+					data: y4,
+					borderWidth: 1,
+					fill:false,
+					backgroundColor:'#f0ad4e'
+					,borderColor:'#f0ad4e'
+					,steppedLine:true
+				}
+			]
+
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
+						}
+					}]
+				}
+			}
+		});
+}
+//////////
+function hum(humdata){
+var y1=[],y2=[],f=0;
+var x=[];
+humdata.data.forEach(function(item){
+	if(f!=0)
+		x.push(item.date.split("-")[2]+"_"+item.time.split(":")[0]);
+	else{
+		x.push(item.date.split("-")[1]+"/"+item.date.split("-")[2]+"_"+item.time);
+		f=1;
+	}
+	y1.push(item.RH_in);
+	y2.push(item.RH_out);
+});
+		var ctx = document.getElementById('humChart').getContext('2d');
+		var myChart = new Chart(ctx, {
+			type: 'line',
+			data: {
+				labels: x,
+				datasets: [{
+					label: 'رطوبت درون',
+					data: y1,
+					borderWidth: 1,
+					fill:false,
+					backgroundColor:'#5cb85c'
+					,borderColor:'#5cb85c'
+				},{
+					label: 'رطوبت بیرون',
+					data: y2,
+					borderWidth: 1,
+					fill:false,
+					backgroundColor:'#5bc0de'
+					,borderColor:'#0275d8'
+				}]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
+						}
+					}]
+				}
+			}
+		});
+}
+	</script>
+
+	
+	<!--cursor-->
+	<script>
+		var cursor = $(".cursor"),
+			follower = $(".cursor-follower");
+
+		var posX = 0,
+			posY = 0;
+
+		var mouseX = 0,
+			mouseY = 0;
+
+		TweenMax.to({}, 0.016, {
+			repeat: -1,
+			onRepeat: function () {
+				posX += (mouseX - posX) / 9;
+				posY += (mouseY - posY) / 9;
+
+				TweenMax.set(follower, {
+					css: {
+						left: posX - 6,
+						top: posY - 6
+					}
+				});
+				TweenMax.set(cursor, {
+					css: {
+						left: mouseX,
+						top: mouseY
+					}
+				});
+			}
+		});
+
+		$(document).on("mousemove", function (e) {
+			mouseX = e.pageX;
+			mouseY = e.pageY;
+		});
+
+		$(".link").on("mouseenter", function () {
+			cursor.addClass("active");
+			follower.addClass("active");
+		});
+
+		$(".link").on("mouseleave", function () {
+			cursor.removeClass("active");
+			follower.removeClass("active");
+		});
+	</script>
+	
+	
+	<script>
+		 $(window).on('load', function () {
+			$('.preloader').fadeOut('slow');
+		});					
+	</script>
+
 </body>
 </html>
