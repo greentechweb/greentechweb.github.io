@@ -2321,6 +2321,10 @@ box-shadow:  9px 9px 17px #b5bfcb,
 			.then(result => hum(result))
 			.catch(error => console.log('error', error));
 		}
+		function createload(id){
+			$('.preloader').fadeOut();
+			ghid=id;
+		}
 		function create(input) {
 			var myHeaders = new Headers();
 			myHeaders.append("Authorization", "Bearer "+params);
@@ -2333,7 +2337,7 @@ box-shadow:  9px 9px 17px #b5bfcb,
 			};
 			fetch("http://127.0.0.1:8000/api/create_greenhouse", requestOptions)
 			.then(response => response.json())
-			.then(result =>ghid=result.data.id)
+			.then(result =>createload(result.data.id))
 			.catch(error => console.log('error', error));
 		}
 		function user() {
@@ -2532,6 +2536,7 @@ box-shadow:  9px 9px 17px #b5bfcb,
 			gh.ventilagin_every_houre=parseFloat($("#ventilagin_every_houre").val());
 			gh.greenhouse_type=$('#greenhouse_type option:selected').val();
 			console.log(gh);
+			$('.preloader').fadeIn();
 			create(gh);
 			setTimeout(() => {
 				console.log(ghid);	
