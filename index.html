@@ -1,58 +1,63 @@
 <!DOCTYPE html>
 <html>
-<head>	
-	<!--meta-->
-	 <meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<!--bootstrap-->
-	<link rel="stylesheet" href="assets/framework/bootstrap-4.3.1-dist/css/bootstrap.min.css">
-	<!--fontawsome-->
-	<link href="assets/framework/fontawesome-free-5.15.1-web/css/all.min.css" rel="stylesheet">
-	<!--Style-->
-	<link rel="stylesheet" href="assets/css/style.css">
-	<link rel="stylesheet" href="assets/css/checkmark.css">
-	<!--Font-->
-	<link rel="stylesheet" href="assets/font/css/style.css">
-	
-	<!--jquery-->
-	<script src="assets/framework/jquery/jquery-3.5.1.min.js"></script>
-	<style>
-		.preloader {
-   position: absolute;
-   top: 0;
-   left: 0;
-   width: 100%;
-   height: 100%;
-   z-index: 9999;
-   background-color: #FFF;
-}
-.load{
-	position: absolute;
-	left:48%;
-	top:48%;
-	
-}
-html,body{
-	margin:0;
-	padding:0;
-}
+  <head>
+    <!--meta-->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--bootstrap-->
+    <link
+      rel="stylesheet"
+      href="assets/framework/bootstrap-4.3.1-dist/css/bootstrap.min.css"
+    />
+    <!--fontawsome-->
+    <link
+      href="assets/framework/fontawesome-free-5.15.1-web/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!--Style-->
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/checkmark.css" />
+    <!--Font-->
+    <link rel="stylesheet" href="assets/font/css/style.css" />
 
+    <!--jquery-->
+    <script src="assets/framework/jquery/jquery-3.5.1.min.js"></script>
+    <style>
+      .preloader {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background-color: #fff;
+      }
+      .load {
+        position: absolute;
+        left: 48%;
+        top: 48%;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
 
-/* Two */
-.glass{
-  background-repeat: no-repeat;
-  background-position: -120px -120px, 0 0;
-  background-image: -webkit-linear-gradient(
-    top left,
-    rgba(255, 255, 255, 0.0) 25%,
-    rgba(255, 255, 255, 0.4) 30%,
-    rgba(255, 255, 255, 0.1) 38%,
-    rgba(255, 255, 255, 0.05) 50%,
-    rgba(255, 255, 255, 0.2) 62%,
-    rgba(255, 255, 255, 0.6)70%,
-    rgba(255, 255, 255, 0.0) 75%
-  );
-  /*background-image: -moz-linear-gradient(
+      /* Two */
+      .glass {
+        background-repeat: no-repeat;
+        background-position: -120px -120px, 0 0;
+        background-image: -webkit-linear-gradient(
+          top left,
+          rgba(255, 255, 255, 0) 25%,
+          rgba(255, 255, 255, 0.4) 30%,
+          rgba(255, 255, 255, 0.1) 38%,
+          rgba(255, 255, 255, 0.05) 50%,
+          rgba(255, 255, 255, 0.2) 62%,
+          rgba(255, 255, 255, 0.6) 70%,
+          rgba(255, 255, 255, 0) 75%
+        );
+        /*background-image: -moz-linear-gradient(
     0 0,
     rgba(255, 255, 255, 0.2) 0%,
     rgba(255, 255, 255, 0.2) 37%,
@@ -73,143 +78,515 @@ html,body{
     rgba(255, 255, 255, 0.6) 45%,
     rgba(255, 255, 255, 0.0) 50%
   );*/
+
+        -moz-background-size: 250% 300%, 100% 100%;
+        background-size: 250% 300%, 100% 100%;
+      }
+      .glass {
+        animation-name: shine;
+        animation-duration: 4s;
+        animation-iteration-count: infinite;
+      }
+
+      @keyframes shine {
+        0% {
+          background-position: -120px -120px, 0 0;
+        }
+        100% {
+          background-position: 100px 100px, 0 0;
+        }
+      }
+	  *, *:before, *:after {
+	 box-sizing: border-box;
+	 margin: 0;
+	 padding: 0;
+}
+ input, button {
+	 border: none;
+	 outline: none;
+	 background: none;
+	 font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+}
+ .tip {
+	 font-size: 20px;
+	 margin: 40px auto 50px;
+	 text-align: center;
+}
+ .cont {
+	 overflow: hidden;
+	 position: relative;
+	 width: 900px;
+	 height: 550px;
+	 margin: 0 auto 100px;
+	 background: linear-gradient(145deg, #29d08a, #22af74);
+}
+ .form {
+	 position: relative;
+	 width: 640px;
+	 height: 100%;
+	 transition: transform 1.2s ease-in-out;
+	 padding: 20px 30px 0;
+}
+ .sub-cont {
+	 overflow: hidden;
+	 position: absolute;
+	 left: 640px;
+	 top: 0;
+	 width: 900px;
+	 height: 100%;
+	 padding-left: 260px;
+	 background: linear-gradient(145deg, #29d08a, #22af74);
+	 transition: transform 1.2s ease-in-out;
+}
+ .cont.s--signup .sub-cont {
+	 transform: translate3d(-640px, 0, 0);
+}
+
+ .img {
+	 overflow: hidden;
+	 z-index: 2;
+	 position: absolute;
+	 left: 0;
+	 top: 0;
+	 width: 260px;
+	 height: 100%;
+	 padding-top: 360px;
+}
+ .img:before {
+	 content: '';
+	 position: absolute;
+	 right: 0;
+	 top: 0;
+	 width: 900px;
+	 height: 100%;
+	 background-image: url('assets/img/header.jpg');
+	 background-size: cover;
+	 transition: transform 1.2s ease-in-out;
+}
+ .img:after {
+	 content: '';
+	 position: absolute;
+	 left: 0;
+	 top: 0;
+	 width: 100%;
+	 height: 100%;
+	 background: rgba(0, 0, 0, 0.6);
+}
+ .cont.s--signup .img:before {
+	 transform: translate3d(640px, 0, 0);
+}
+ .img__text {
+	 z-index: 2;
+	 position: absolute;
+	 left: 0;
+	 top: 50px;
+	 width: 100%;
+	 padding: 0 20px;
+	 text-align: center;
+	 color: #fff;
+	 transition: transform 1.2s ease-in-out;
+}
+ .img__text h2 {
+	 margin-bottom: 10px;
+	 font-weight: normal;
+}
+ .img__text p {
+	 font-size: 14px;
+	 line-height: 1.5;
+}
+ .cont.s--signup .img__text.m--up {
+	 transform: translateX(520px);
+}
+ .img__text.m--in {
+	 transform: translateX(-520px);
+}
+ .cont.s--signup .img__text.m--in {
+	 transform: translateX(0);
+}
+ .img__btn {
+	 overflow: hidden;
+	 z-index: 2;
+	 position: relative;
+	 width: 100px;
+	 height: 36px;
+	 margin: 0 auto;
+	 background: transparent;
+	 color: #fff;
+	 text-transform: uppercase;
+	 font-size: 15px;
+	 cursor: pointer;
+}
+ .img__btn:after {
+	 content: '';
+	 z-index: 2;
+	 position: absolute;
+	 left: 0;
+	 top: 0;
+	 width: 100%;
+	 height: 100%;
+	 border: 2px solid #fff;
+	 border-radius: 30px;
+}
+ .img__btn span {
+	 position: absolute;
+	 left: 0;
+	 top: 0;
+	 display: flex;
+	 justify-content: center;
+	 align-items: center;
+	 width: 100%;
+	 height: 100%;
+	 transition: transform 1.2s;
+}
+ .img__btn span.m--in {
+	 transform: translateY(-72px);
+}
+ .cont.s--signup .img__btn span.m--in {
+	 transform: translateY(0);
+}
+ .cont.s--signup .img__btn span.m--up {
+	 transform: translateY(72px);
+}
+ h2 {
+	 width: 100%;
+	 font-size: 26px;
+	 text-align: center;
+}
+ label {
+	 display: block;
+	 width: 260px;
+	 margin: 25px auto 0;
+	 text-align: center;
+}
+ label span {
+	 font-size: 12px;
+	 color: #cfcfcf;
+	 text-transform: uppercase;
+}
+ input {
+	 display: block;
+	 width: 100%;
+	 margin-top: 5px;
+	 padding-bottom: 5px;
+	 font-size: 16px;
+	 border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+	 text-align: center;
+}
+ .forgot-pass {
+	 margin-top: 15px;
+	 text-align: center;
+	 font-size: 12px;
+	 color: #cfcfcf;
+}
+ .submit {
+	 margin-top: 40px;
+	 margin-bottom: 20px;
+	 background: #d4af7a;
+	 text-transform: uppercase;
+}
+ .fb-btn {
+	 border: 2px solid #d3dae9;
+	 color: #8fa1c7;
+}
+ .fb-btn span {
+	 font-weight: bold;
+	 color: #455a81;
+}
+ .sign-in {
+	 transition-timing-function: ease-out;
+}
+ .cont.s--signup .sign-in {
+	 transition-timing-function: ease-in-out;
+	 transition-duration: 1.2s;
+	 transform: translate3d(640px, 0, 0);
+}
+ .sign-up {
+	 transform: translate3d(-900px, 0, 0);
+}
+ .cont.s--signup .sign-up {
+	 transform: translate3d(0, 0, 0);
+}
+ .icon-link {
+	 position: absolute;
+	 left: 5px;
+	 bottom: 5px;
+	 width: 32px;
+}
+ .icon-link img {
+	 width: 100%;
+	 vertical-align: top;
+}
+ .icon-link--twitter {
+	 left: auto;
+	 right: 5px;
+}
  
-  -moz-background-size: 250% 300%, 100% 100%;
-       background-size: 250% 300%, 100% 100%;
-  
-}
-.glass{
-	animation-name: shine;
-  animation-duration: 4s;
-  animation-iteration-count: infinite;
-}
+    </style>
+  </head>
 
+  <body>
+	
+	<div class="cont login mt-sm-5">
+	  <div class="form sign-in justify-content-center row">
+		<form action="" method="POST" id="loginform">
+			<img class="logo my-3 mx-auto" src="assets/img/logo-sm.png" style="position:relative; left:50%; transform: translateX(-50%);"/>
+			<h1 class="h3 mb-3 text-center text-bold text-white">ورود</h1>
+			<input
+			  type="text"
+			  name="username"
+			  id="username"
+			  class="form-control btn-n bg-white mb-4 text-center"
+			  placeholder="نام کاربری"
+			  required=""
+			  autofocus=""
+			  style="direction: rtl"
+			/>
+			<input
+			  type="password"
+			  name="password"
+			  id="password"
+			  class="form-control btn-n bg-white mb-4 text-center"
+			  placeholder="رمز عبور"
+			  required=""
+			  style="direction: rtl"
+			/>
 
-@keyframes shine {
-  0% {background-position: -120px -120px, 0 0;}
-  100% {background-position: 100px 100px, 0 0;}
-}
-	</style>
-</head>
-
-<body>
-	<div class="row fixed-top ">
-	<a href="http://afra-watergy.com" class=" btn-n text-white mx-4 my-3 px-3 py-2" >
-		<i class="fa fa-home fa-2x"></i>
-	</a>
-	</div>
-	<div class="preloader align-items-center justify-content-center">
-		<div class="spinner-border load text-success" role="status">
-			<span class="sr-only">Loading...</span>
+			<label class="contain"
+			  >مرا به خاطر داشته باش
+			  <input type="checkbox" checked="checked" />
+			  <span class="checkmark"></span>
+			</label>
+			<br />
+			<button class="btn-n py-2 px-4 glass" type="submit" style="position:relative; left:50%; transform: translateX(-50%);">
+			  <h6 class="text-white">ورود</h6>
+			</button>
+		  </form>
+	  </div>
+	  <div class="sub-cont">
+		<div class="img">
+		  <div class="img__text m--up">
+			<h2>هنوز ثبت نام نکردید؟</h2>
+			<i class="fa fa-5x fa-user-plus" style="opacity: 0.7"></i>
 		  </div>
-	</div>
-	<div class="container">
-		
-			<div class="login row bg-dark rounded mt-sm-5">
-				<div class="col-6 d-flex justify-content-center align-items-center cover">
-					<i class="fa fa-5x fa-sign-in" style="opacity:0.7;"></i>
-				</div>
-				<div class="col-6 d-flex justify-content-center text-center" style="direction:rtl;">
-					<form action="" method="POST" id="loginform">
-						<img class="logo m-3" src="assets/img/logo-sm.png">
-						<h1 class="h3 mb-3 text-bold text-white">لطفاً وارد شوید</h1>
-						<input type="text" name="username" id="username" class="form-control btn-n bg-white mb-4 text-center" placeholder="نام کاربری" required="" autofocus="" style="direction:rtl; ">
-						<input type="password" name="password" id="password" class="form-control btn-n bg-white mb-4 text-center" placeholder="رمز عبور" required="" style="direction: rtl;">
-						
-						<label class="contain">مرا به خاطر داشته باش
-							<input type="checkbox" checked="checked">
-							<span class="checkmark"></span>
-						</label>
-						<br/>
-						<button class="btn-n py-2 px-4 glass" type="submit"><h6 class="text-white">ورود</h6></button>
-						
-						<h6 class="mt-6 mt-sm-5 mb-3 text-white">سبز پایش افرا ©
-						
-						</h6>
-						
-					</form>
-				</div>
-				
-			</div>
-		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-		<script>
-			function swalerror(){
-				
-					Swal.fire({
-						icon: 'error',
-						title: 'متاسفیم',
-						text: 'نام کاربری یا رمز عبور اشتباه است ',
-						confirmButtonText: 'باشه'
-					})
-				
-			}
-			function register() {
-  fetch('http://127.0.0.1:8000/api/register', {
-    method: 'post',
-    headers: {
-      'Accept': 'application/json, text/plain, */*',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      "name":"Hesam",
-      "email": "hesam@gmail.com",
-      "mobile":"09123456789",
-      "password": "123456",
-      "password_confirmation":"123456"
-  })
-  }).then(res=>res.json())
-    .then(res => console.log(res));
-}
-			function login(e) {
-				fetch('http://127.0.0.1:8000/api/login', {
-					method: 'post',
-					headers: {
-					'Accept': 'application/json, text/plain, */*',
-					'Content-Type': 'application/json'
-					},
-					body: JSON.stringify(e)
-				}) .then(function (res) {
-            return res.json();
-        })
-        .then(function (data) {
-			if(data.token==undefined)
-				swalerror();
-			else
-            	window.location.href="dashboard.html?"+data.token;
-        })
-				}
-			$( "#loginform" ).submit(function( event ) {
-				event.preventDefault();
-				var user = {mobile:$("#username").val(), password:$("#password").val()};
-				login(user);
-			});
-		</script>
-		
-		<!--Waves Container-->
-		<div class="fixed-bottom">
-			<svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-				<defs>
-					<path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-				</defs>
-				<g class="parallax">
-					<use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
-					<use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
-					<use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
-					<use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
-				</g>
-			</svg>
+		  <div class="img__text m--in">
+			<h2>قبلا ثبت نام کردید؟</h2>
+			<i class="fa fa-5x fa-sign-in" style="opacity: 0.7"></i>
+		  </div>
+		  <div class="img__btn">
+			<span class="m--up">ثبت نام</span>
+			<span class="m--in">ورود</span>
+		  </div>
 		</div>
-		<!--Waves end-->
-
+		<div class="form sign-up justify-content-center row" style="overflow-y: auto;">
+			<form action="" method="POST" id="registerform">
+				<img class="logo mb-3 mx-auto" src="assets/img/logo-sm.png" style="position:relative; left:50%; transform: translateX(-50%);"/>
+				<h1 class="h3 mb-3 text-center text-bold text-white">ثبت نام</h1>
+				<input
+				  type="text"
+				  name="name"
+				  id="name"
+				  class="form-control btn-n bg-white mb-4 text-center"
+				  placeholder="نام کاربری"
+				  required=""
+				  autofocus=""
+				  style="direction: rtl"
+				/>
+				<div class="row">
+					<div class="col-6">
+				<input
+				  type="email"
+				  name="email"
+				  id="email"
+				  class="form-control btn-n bg-white mb-4 text-center"
+				  placeholder="ایمیل"
+				  required=""
+				  style="direction: rtl"
+				/>
+			</div>
+			<div class="col-6">
+				<input
+				  type="text"
+				  name="mobile"
+				  id="mobile"
+				  class="form-control btn-n bg-white mb-4 text-center"
+				  placeholder="موبایل"
+				  required=""
+				  style="direction: rtl"
+				/>
+			</div>
+				</div>
+				<input
+				  type="password"
+				  name="password-r"
+				  id="password-r"
+				  class="form-control btn-n bg-white mb-4 text-center"
+				  placeholder="رمز عبور"
+				  required=""
+				  style="direction: rtl"
+				/>
+				<input
+				  type="password-c"
+				  name="password-c"
+				  id="password-c"
+				  class="form-control btn-n bg-white mb-4 text-center"
+				  placeholder="تکرار رمز عبور"
+				  required=""
+				  style="direction: rtl"
+				/>
+				<br />
+				<button class="btn-n py-2 px-4 glass" type="submit" style="position:relative; left:50%; transform: translateX(-50%);">
+				  <h6 class="text-white">ثبت نام</h6>
+				</button>
+	
+				<!--<h6 class="mt-6 mt-sm-5 mb-3 text-white text-center">سبز پایش افرا ©</h6>-->
+			  </form>
+		</div>
+	  </div>
 	</div>
-	<!--fontawsome-->
-	<script src="https://use.fontawesome.com/193008b0be.js"></script>
+	
 	<script>
-		$(window).on('load', function () {
-	 
-  $('.preloader').fadeOut('slow');
-});					
-   </script>
-   
-</body>
+		document.querySelector('.img__btn').addEventListener('click', function() {
+  document.querySelector('.cont').classList.toggle('s--signup');
+});
+	</script>
+
+
+    <div class="row fixed-top">
+      <a
+        href="http://afra-watergy.com"
+        class="btn-n text-white mx-4 my-3 px-3 py-2"
+      >
+        <i class="fa fa-home fa-2x"></i>
+      </a>
+    </div>
+    <div class="loading-home" id="loadingDiv">
+		<div class="loader-home"></div>
+	</div>
+    
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+      <script>
+        function swalerror() {
+          Swal.fire({
+            icon: "error",
+            title: "",
+            text: "نام کاربری یا رمز عبور اشتباه است ",
+            confirmButtonText: "باشه",
+          });
+        }
+        function login(e) {
+          fetch("http://127.0.0.1:8000/api/login", {
+            method: "post",
+            headers: {
+              Accept: "application/json, text/plain, */*",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(e),
+          })
+            .then(function (res) {
+              return res.json();
+            })
+            .then(function (data) {
+              if (data.token == undefined) swalerror();
+              else window.location.href = "dashboard.html?" + data.token;
+            });
+		}
+		function register() {
+			var myHeaders = new Headers();
+			myHeaders.append("Content-Type", "application/json");
+			var raw = JSON.stringify({"name":$("#name").val(),"email":$("#email").val(),"mobile":$("#mobile").val(),"password":$("#password-r").val(),"password_confirmation":$("#password-c").val()});
+			var requestOptions = {
+				method: 'POST',
+				headers: myHeaders,
+				body: raw,
+				redirect: 'follow'
+			};
+			fetch("http://127.0.0.1:8000/api/register", requestOptions)
+			.then(response => response.json())
+			.then(result => reg(result))
+			.catch(error => reger());
+        }
+        $("#loginform").submit(function (event) {
+          event.preventDefault();
+          var user = {
+            mobile: $("#username").val(),
+            password: $("#password").val(),
+          };
+          login(user);
+		});
+		$("#registerform").submit(function (event) {
+          event.preventDefault();
+          register();
+		});
+		function reg(e){
+			console.log(e);
+			if(e.message=="register was successful")
+			Swal.fire({
+				icon: "success",
+				title: "",
+				text: "با موفقیت ثبت نام کردید",
+				confirmButtonText: "باشه",
+			});
+			else{
+				reger();
+			}
+		}
+		function reger(){
+			Swal.fire({
+				icon: "error",
+				title: "",
+				text: "خطایی رخ داده است",
+				confirmButtonText: "باشه",
+			});
+		}
+      </script>
+
+      <!--Waves Container-->
+      <div class="fixed-bottom">
+        <svg
+          class="waves"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 24 150 28"
+          preserveAspectRatio="none"
+          shape-rendering="auto"
+        >
+          <defs>
+            <path
+              id="gentle-wave"
+              d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+            />
+          </defs>
+          <g class="parallax">
+            <use
+              xlink:href="#gentle-wave"
+              x="48"
+              y="0"
+              fill="rgba(255,255,255,0.7"
+            />
+            <use
+              xlink:href="#gentle-wave"
+              x="48"
+              y="3"
+              fill="rgba(255,255,255,0.5)"
+            />
+            <use
+              xlink:href="#gentle-wave"
+              x="48"
+              y="5"
+              fill="rgba(255,255,255,0.3)"
+            />
+            <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+          </g>
+        </svg>
+      </div>
+      <!--Waves end-->
+    </div>
+    <!--fontawsome-->
+    <script src="https://use.fontawesome.com/193008b0be.js"></script>
+    <script>
+      $(window).on('load', function () {
+			$('#loadingDiv').fadeOut('slow');
+		});		
+    </script>
+  </body>
 </html>
