@@ -893,8 +893,8 @@
 	</div>
 	<div class="head d-flex align-items-center">
 		<img class="link logo" src="assets/img/gt-sm.png"></img>
-		<h6 class="d-line mx-2"><i class="fa fa-clock mx-3"></i>۱۵:۳۴</h6>
-		<h6 class="d-line mx-2">شنبه ، ۲۰ دی ۹۹</h6>
+		<!--<h6 class="d-line mx-2"><i class="fa fa-clock mx-3"></i>۱۵:۳۴</h6>-->
+		<h6 class="d-line mx-2">پنجشنبه ، ۲۵ دی ۹۹</h6>
 	</div>
 	<div class="main p-3">
 
@@ -2320,7 +2320,7 @@
 		params.get('');
 		var daySlider = document.getElementById('daySlider');
 		var nightSlider = document.getElementById('nightSlider');
-		var date = "1399/09/26";
+		var date = "1399/10/26";
 		function select(value) {
 			$('#statelist option[value=' + value + ']').prop('selected', true);
 			CityList(value);
@@ -2930,36 +2930,66 @@
 			th.className = "p-1";
 			th.appendChild(text);
 			tr.appendChild(th);
-			thead.appendChild(tr);
+			//thead.appendChild(tr);
 			var text = document.createTextNode("سه ماهۀ اول");
 			var th = document.createElement('th');
-			th.className = "bg-light p-2 text-center";
+			th.colSpan="2";
 			th.appendChild(text);
 			tr.appendChild(th);
-			thead.appendChild(tr);
+			//thead.appendChild(tr);
 			var text = document.createTextNode("سه ماهۀ دوم");
 			var th = document.createElement('th');
-			th.className = "bg-light p-2 text-center";
+			th.colSpan="2";
 			th.appendChild(text);
 			tr.appendChild(th);
-			thead.appendChild(tr);
+			//thead.appendChild(tr);
 			var text = document.createTextNode("سه ماهۀ سوم");
 			var th = document.createElement('th');
-			th.className = "bg-light p-2 text-center";
+			th.colSpan="2";
 			th.appendChild(text);
 			tr.appendChild(th);
-			thead.appendChild(tr);
+			//thead.appendChild(tr);
 			var text = document.createTextNode("سه ماهۀ چهارم");
 			var th = document.createElement('th');
-			th.className = "bg-light p-2 text-center";
+			th.colSpan="2";
+			th.appendChild(text);
+			tr.appendChild(th);
+			//thead.appendChild(tr);
+			var text = document.createTextNode("مجموع کل سال");
+			var th = document.createElement('th');
+			th.colSpan="2";
+			th.appendChild(text);
+			tr.appendChild(th);
+			var text = document.createTextNode("اختلاف سالانه");
+			var th = document.createElement('th');
+			th.rowSpan="2";
+			th.appendChild(text);
+			tr.appendChild(th);
+			var text = document.createTextNode("درصد اختلاف سالانه");
+			var th = document.createElement('th');
+			th.rowSpan="2";
 			th.appendChild(text);
 			tr.appendChild(th);
 			thead.appendChild(tr);
-			var text = document.createTextNode("مجموع کل سال");
+			var text = document.createTextNode(".");
 			var th = document.createElement('th');
-			th.className = "bg-light p-2 text-center";
+			th.className = "p-1";
+			var tr = document.createElement('tr');
 			th.appendChild(text);
 			tr.appendChild(th);
+			var j;
+			for(j=0;j<10;j++){
+				var th = document.createElement('th');
+				if(j%2==0){
+					var text = document.createTextNode("پیش بینی");
+				}
+				else{
+					var text = document.createTextNode("واقعی");
+				}
+				th.appendChild(text);
+				tr.appendChild(th);
+				
+			}
 			thead.appendChild(tr);
 			var i=0;
 			var tr = document.createElement('tr');
@@ -2979,14 +3009,30 @@
 					var text = document.createTextNode(item.pre);
 					td.appendChild(text);
 					tr.appendChild(td);
+					var td = document.createElement('td');
+					var text = document.createTextNode(item.real);
+					td.appendChild(text);
+					tr.appendChild(td);
 				}
 				else{
 					var td = document.createElement('td');
 					var text = document.createTextNode(item.pre);
 					td.appendChild(text);
 					tr.appendChild(td);
+					var td = document.createElement('td');
+					var text = document.createTextNode(item.real);
+					td.appendChild(text);
+					tr.appendChild(td);
 				}
 				if(i%5==4){
+					var td = document.createElement('td');
+					var text = document.createTextNode(item.dif_season);
+					td.appendChild(text);
+					tr.appendChild(td);
+					var td = document.createElement('td');
+					var text = document.createTextNode(item.dif_100);
+					td.appendChild(text);
+					tr.appendChild(td);
 					tbody.appendChild(tr);
 				}
 				i++;
