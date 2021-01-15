@@ -12,9 +12,11 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css">
 	<link rel="stylesheet" href="assets/framework/clockpicker/src/clockpicker.css">
 	<link rel="stylesheet" href="assets/framework/clockpicker/src/standalone.css">
-	<link rel="stylesheet" href="assets/framework/gantt/frappe-gantt.css" />
 	<script src="https://use.fontawesome.com/193008b0be.js"></script>
 	<style>
+		.transparent{
+			opacity: 0.2;
+		}
 		.t-bold {
 			font-weight: bold;
 		}
@@ -1678,8 +1680,12 @@
 				<div class="col-8">
 					<div class="row mt-4">
 						<div class="col-4 link">
-							<button class="item-n py-2 px-4 h6" onclick="location.href ='assets/file/finance.xlsx';"><i
+							<button class="item-n py-2 px-4 h6" onclick="location.href ='assets/file/مدیریت مالی گلخانه(بودجه‌بندی).xlsx';"><i
 									class="fa fa-download"></i> دریافت فایل اکسل</button>
+						</div>
+						<div class="col-4 link">
+							<button class="item-n py-2 px-4 h6" onclick="location.href ='assets/file/فایل نمونه.xlsx';"><i
+									class="fa fa-download"></i> فایل نمونۀ پر شده</button>
 						</div>
 						<div class="col-4 link">
 							<button class="item-n py-2 px-4 h6" onclick="location.href ='assets/file/finance.pdf';"><i
@@ -1755,7 +1761,9 @@
 				<button class="item-n2 py-2 px-4 h6 mt-4"><i class="fa fa-money"></i> تحلیل های مالی</button>
 			</div>
 			<div class="row justify-content-center mt-2">
+				
 				<div class="col-8 justify-content-center" id="fintable">
+					<h6 style="position: absolute; left:50%; top:10%; width:50%; transform: translateX(-50%); text-align: justify; line-height: 30px;">ارائۀ تحلیل های نموداری و جداول تحلیلی به زودی انجام خواهد شد. برای اطلاع از برنامۀ ما در زمینۀ نحوه انجام این موارد به فایل راهنما و اکسل قابل دانلود در قسمت تحلیل مالی مراجعه کنید</h6>
 				</div>
 			</div>
 		</section>
@@ -2282,11 +2290,7 @@
 	<script src="assets/framework/wnumb-1.2.0/wNumb.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 	<script src="assets/framework/clockpicker/src/clockpicker.js"></script>
-	<script src="assets/framework/snap.svg/snap.svg-min.js"></script>
-	<script src="assets/framework/gantt/frappe-gantt.js"></script>
-	<!--TweenMax-->
 	<script src="assets/framework/TweenMax/TweenMax.min.js"></script>
-	<!--sweetalert-->
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	<script>
 
@@ -2580,16 +2584,16 @@
 
 				fetch("http://127.0.0.1:8000/api/file", requestOptions)
 					.then(response => response.text())
-					.then(result => finance())
+					.then(result => finance(ghid))
 					.catch(error => console.log('error', error));
 			}
 		}
-		function finance() {
+		function finance(id) {
 			var myHeaders = new Headers();
 			var myHeaders = new Headers();
 			myHeaders.append("Authorization", "Bearer " + params);
 			myHeaders.append("Content-Type", "application/json; charset=UTF-8");
-			var raw = JSON.stringify({ "id_greenhouse": ghid });
+			var raw = JSON.stringify({ "id_greenhouse": id });
 
 			var requestOptions = {
 				method: 'POST',
@@ -2837,6 +2841,7 @@
 			$("#menu").css("display", "none");
 			$("#report-menu").css("display", "initial");
 			get(id);
+			finance(id);
 		}
 		$("#finish").click(function (event) {
 			event.preventDefault();
@@ -3034,7 +3039,7 @@
 				}
 				i++;
 			});
-			table.className = "table table-bordered table-hover table-responsive rtl";
+			table.className = "table table-bordered table-hover table-responsive rtl transparent";
 			thead.className = "thead-light";
 			table.appendChild(thead);
 			table.appendChild(tbody);
